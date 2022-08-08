@@ -1,0 +1,46 @@
+<div>
+	
+	<div id="counter"></div>
+	
+	<script type="module">
+		
+		import { Component } from '../../source/component.js'
+		
+		Component.ready(function(component, system) {
+			const object = icaro({ value : 0 })
+			object.listen(function() {
+				document.querySelector('#counter').innerHTML = object.value
+			})
+			;(function loop() {
+				object.value++
+				requestAnimationFrame(loop)
+			}())
+		})
+		
+		const object = icaro( {} )
+		object.listen(function(changes) {
+			console.log(changes.get('foo')) // 'hi'
+			console.log(changes.get('bar')) // 'there'
+			console.log(changes.get('baz')) // 'dude'
+			object.unlisten()
+		})
+		object.foo = 'hi'
+		object.bar = 'there'
+		object.baz = 'dude'
+		
+		const arr = icaro( [] )
+		arr.listen(function(changes) {
+			console.log(changes.get('0')) // 'foo'
+			console.log(changes.get('1')) // 'bar'
+			arr.unlisten()
+			arr.listen(function(changes) {
+				console.log(changes.get('0')) // 'bar'
+				console.log(changes.get('1')) // 'foo'
+			})
+			arr.reverse()
+		})
+		arr.push('foo')
+		arr.push('bar')
+		
+	</script>
+</div>

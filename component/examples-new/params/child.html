@@ -1,0 +1,23 @@
+
+<div>
+	
+	<div>child.html</div>
+	<div name="grandchild" data-component="./grandchild.html"></div>
+	
+	<script type="module">
+		
+		import { Component } from '../../source/component.js'
+		
+		Component.ready(function(component, system) {
+			
+			console.log('child.html ready')
+			let child = component.child('grandchild')
+			child = component.child(0)
+			child.on('initialized' , function() {
+				system.bus.emit('data', 48)
+			})
+			child.data = { value: 56}
+		})
+		
+	</script>
+</div>

@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>State: Main</title>
+	</head>
+	<body>
+		<script type="module">
+			
+			import { Store } from '../source/store.js'
+			import history from '../source/history.js'
+			import logging from '../source/logging.js'
+			import proxy from '../source/proxy.js'
+			
+			let store = new Store()
+			.use(history)
+			.use(logging)
+			.use(proxy)
+			
+			// store.bus.on('change', function(path, value, value_old) {
+			// 	console.log('change')
+			// })
+			// store.bus.on('change:array/0', function(path, value, value_old) {
+			// 	console.log('change:array/0')
+			// })
+			// store.bus.on('did-set-value', function(path, value, value_old) {
+			// 	console.log('did-set-value')
+			// })
+			// store.bus.on('did-patch-values', function(path, value, value_old) {
+			// 	console.log('did-patch-values')
+			// })
+			// store.bus.on('did-undo-one', function(change) {
+			// 	console.log('did-undo-one')
+			// })
+			// store.bus.on('did-undo-many', function(change) {
+			// 	console.log('did-undo-many')
+			// })
+			// store.bus.on('did-redo-one', function(change) {
+			// 	console.log('did-redo-one')
+			// })
+			// store.bus.on('did-redo-many', function(change) {
+			// 	console.log('did-redo-many')
+			// })
+			
+			store.set(['one'], {})
+			store.set(['one', 'two'], {})
+			store.set(['one', 'two', 'three'], {})
+			store.set(['values'], {})
+			store.patch(['values'], { a: 1, b : 2 })
+			store.patch(['values'], { c: 3, d : 4 })
+			let values = store.select(['values'])
+			values.set(['a'], 'a!!!')
+			store.mark('marker')
+			store.set(['array'], [])
+			store.set(['array'], store.get(['array']).concat(['one']))
+			store.set(['array'], store.get(['array']).concat(['two']))
+			store.set(['array'], store.get(['array']).concat(['three']))
+			store.select(['array']).on('change', function({ path, value, value_old }) {
+				console.log(`array changed to: ${JSON.stringify(value)}`)
+			})
+			store.select(['array', 0]).on('change', function({ path, value, value_old }) {
+				console.log(`array[0] changed to: ${JSON.stringify(value)}`)
+			})
+			let array = store.select(['array'])
+			array.set([0], 'one!!!')
+			store.set(['array'], store.get(['array']).concat(['four']))
+			store.undo('marker')
+			// store.undo()
+			// store.undo()
+			// store.undo()
+			// store.redo()
+			// store.redo()
+			// store.redo()
+			// store.redo()
+			// store.redo()
+			// store.redo()
+			// store.redo()
+			// store.redo()
+			// store.redo()
+			console.log('store.root: ' + JSON.stringify(store.root))
+			// console.log('store.changes: ' + JSON.stringify(store.changes, null, 2))
+
+		</script>
+	</body>
+</html>

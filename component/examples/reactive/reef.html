@@ -1,0 +1,29 @@
+<div>
+	
+	<div id="view"></div>
+	
+	<script type="module">
+		
+		import { Component } from '../../source/component.js'
+		import Reef from '../shared/libraries/reef.js'
+		
+		Component.ready(function(component_, system) {
+			let view = new Reef('#view', {
+				data: {
+					greeting: 'Hello',
+					name: 'World',
+					sub : {
+						value: 4
+					}
+				},
+				template: function (props) {
+					return `<h1>${props.greeting}, ${props.name}! ${props.sub.value}</h1>`;
+				}
+			})
+			view.render()
+			view.data.name = 'Worlds'
+			view.data.sub.value = 5
+		})
+		
+	</script>
+</div>

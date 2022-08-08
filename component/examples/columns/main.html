@@ -1,0 +1,23 @@
+<div>
+	main.html
+	
+	<script type="module">
+		
+		import { Component } from '../../source/component.js'
+		
+		Component.ready(function(component) {
+			console.log('main.html ready')
+			let router = window.system.router
+			router.bus.on(`route:0`, function(part, done) {
+				this.element.setAttribute('data-component', `./${part}.html`)
+				done()
+			}.bind(this))
+			if (window.location.hash == '') {
+				window.location.hash = '#/column-one/column-two/column-three'
+			} else {
+				router.fire()
+			}
+		})
+		
+	</script>
+</div>

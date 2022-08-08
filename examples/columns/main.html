@@ -1,0 +1,36 @@
+<div>
+	
+	<div class="container">
+		<section class="content">
+			<select id="state" multiple=true size=20 style="height:100%">
+				<option>#/begin</option>
+				<option>#/products</option>
+				<option>#/products/1</option>
+				<option>#/products/1/features</option>
+				<option>#/products/1/features/2</option>
+				<option>#/1</option>
+				<option>#/1/2</option>
+				<option>#/1/2/3</option>
+				<option>#/1/2/3/4</option>
+				<option>#/1/2/3/4/5</option>
+				<option>#/1/2/3/4/5/6</option>
+				<option>#/list</option>
+				<option>#/end</option>
+			</select>
+		</section>
+		<section name="void" data-component="./empty.html" class="void"></section>
+	</div>
+	
+	<script type="module">
+		
+		import { Component } from '../../component/source/component.js'
+		
+		Component.ready(function(component) {
+			document.querySelector('#state').onchange = function(element) {
+				window.location.hash = this.value
+				return false
+			}
+		})
+		
+	</script>
+</div>

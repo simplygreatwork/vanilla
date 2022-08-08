@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>State: Observe Paths</title>
+	</head>
+	<body>
+		<script type="module">
+			
+			import { Store } from '../source/store.js'
+			import logging from '../source/logging.js'
+			import { clone } from '../source/utility.js'
+			
+			let store = new Store()
+			.use(logging)
+			
+			store.set('a', {})
+			store.set('a.b', {})
+			store.set('a.b.c', {})
+			let a = store.select('a')
+			a.on('change', ({ value, path }) => console.log(`a change: ${JSON.stringify(value)}`))
+			a.select('value').on('change', ({ value, path }) => console.log(`a.value change: ${JSON.stringify(value)}`))
+			let b = store.select('a.b')
+			b.on('change', ({ value, path }) => console.log(`b change: ${JSON.stringify(value)}`))
+			b.select('value').on('change', ({ value, path }) => console.log(`b.value change: ${JSON.stringify(value)}`))
+			a.set('value', 'aa')
+			a.set(null, { value: 'aaaaaaaaaa' })
+			a.set('b', {})
+			b.set('value', 'bb')
+			b.set(null, { value: 'bbbbbbbbbb' })
+			
+		</script>
+	</body>
+</html>

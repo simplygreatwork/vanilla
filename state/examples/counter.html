@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>State: Counter</title>
+	</head>
+	<body>
+		<script type="module">
+			
+			import { Store } from '../source/store.js'
+			import history from '../source/history.js'
+			import logging from '../source/logging.js'
+			import proxy from '../source/proxy.js'
+			
+			let store = new Store()
+			.use(history)
+			.use(logging)
+			.use(proxy)
+			
+			let counter = store.select(['counter'])
+			counter.set([], 0)
+			counter.on('change', function({ path, value}) {
+				console.log(`counter: ${value}`)
+			})
+			window.setInterval(function() {
+				store.set(['counter'], store.get(['counter']) + 1)
+			}, 1000)
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,16 @@
+
+<div>
+	two.html
+	<div data-component="./outer.html"></div>
+	
+	<script type="module">
+		
+		import { Component } from '../../source/component.js'
+		
+		Component.ready(function(component, system) {
+			console.log('two.html ready')
+			console.log('two.html children length: ' + component.children.length)
+		})
+		
+	</script>
+</div>

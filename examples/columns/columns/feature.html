@@ -1,0 +1,23 @@
+
+<div>
+	
+	<div class="container">
+		<section class="content">
+			<header class="title"></header>
+			<section class="scroll">
+				<section name="lorem" data-component="./lorem.html"></section>
+			</section>
+		</section>
+		<section name="void" data-component="./empty.html" class="void"></section>
+	</div>
+	
+	<script type="module">
+		
+		import { Component } from '../../component/source/component.js'
+		
+		Component.ready(function(component, bus) {
+			this.element.querySelector('.title').innerText = `Feature "${component.data.part}"`
+		})
+		
+	</script>
+</div>

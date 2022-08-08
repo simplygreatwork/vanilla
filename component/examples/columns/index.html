@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>Vanilla Web</title>
+		<link rel="stylesheet" type="text/css" href="../shared/styles/flex.css"/>
+		<style>
+			.container {
+				border:0px;
+				box-sizing: border-box;
+				margin: 0 auto;
+				width: 100%;
+				padding: 0px;
+				font-family: 'Lato', sans-serif;
+				height:100vh;
+				max-height:100vh;
+				min-height:100vh;
+				overflow-y:none;
+			}
+
+		</style>
+	</head>
+	<body>
+		index.html
+		<div data-component="./main.html"></div>
+		<script type="module">
+			
+			import { Component } from '../../source/component.js'
+			import { System } from '../shared/scripts/system.js'
+			
+			class Application {
+				
+				constructor() {
+					
+					let system = window.system = new System()
+					let router = system.router
+					Component.start(function() {
+						console.log('index.html ready')
+					})
+				}
+			}
+			
+			new Application()
+			
+		</script>
+	</body>
+</html>

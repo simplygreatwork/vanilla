@@ -1,0 +1,17 @@
+
+<div>
+	outer.html
+	<div data-component="./inner.html"></div>
+	<script type="module">
+		
+		import { Component } from '../../source/component.js'
+		
+		Component.ready(function(component, system) {
+			console.log('outer.html ready')
+			component.children[0].on('initialized', function() {
+				system.bus.emit('data', 49)
+			})
+		})
+		
+	</script>
+</div>

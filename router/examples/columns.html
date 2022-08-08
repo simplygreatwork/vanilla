@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>Router: Columns</title>
+		<link rel="stylesheet" type="text/css" href="./style/columns.css"/>
+		<style>
+			#state {
+				border:0px solid black;
+				outline:1px dotted #212121;
+			}
+			.content {
+				padding:8px;
+			}
+			.header {
+				font-weight:bold;
+				text-transform:uppercase;
+				letter-spacing: .2rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="modal container">
+			<div class="container">
+				<section class="content">
+					<header class="header">Paths</header>
+						<select id="state" multiple=true size=20 style="height:100%">
+							<option>#/1</option>
+							<option>#/1/2</option>
+							<option>#/1/2/3</option>
+							<option>#/11</option>
+							<option>#/11/22</option>
+							<option>#/11/22/33</option>
+							<option>#/111</option>
+							<option>#/111/222</option>
+							<option>#/111/222/333</option>
+							<option>#/111/222/333/444/555</option>
+							<option>#/111/222/666/777/888</option>
+							<option>#/products</option>
+							<option>#/products/a</option>
+							<option>#/products/a/features</option>
+							<option>#/products/a/features/b</option>
+						</select>
+				</section>
+				<section class="void" id="container-0"></section>
+			</div>
+		</div>
+		
+		<script type="module">
+			
+			import { Router } from '../source/router.js'
+			import { install as install_logging } from '../../logger/source/logging.js'
+			
+			class Example {
+				
+				constructor() {
+					
+					let router = new Router()
+					if (false) install_logging('#output')
+					this.prepare_inputs()
+					this.watch(router)
+					this.test()
+				}
+				
+				prepare_inputs() {
+					
+					document.querySelector('#state').onchange = function(element) {
+						window.location.hash = this.value
+						return false
+					}
+				}
+				
+				watch(router) {
+					
+					let self = this
+					router.enter('1', function({part, index}) {
+						self.display(index, part)
+					})
+					router.exit('1', function({part, index}) {
+						self.display(index, null)
+					})
+					router.enter('1/2', function({part, index}) {
+						self.display(index, part)
+					})
+					router.exit('1/2', function({part, index}) {
+						self.display(index, null)
+					})
+					router.enter('1/2/3', function({part, index}) {
+						self.display(index, part)
+					})
+					router.exit('1/2/3', function({part, index}) {
+						self.display(index, null)
+					})
+					router.enter('products', function({part, index}) {
+						self.display(index, part)
+					})
+					router.exit('products', function({part, index}) {
+						self.display(index, null)
+					})
+					router.enter('products/:pid', function({part, index, values}) {
+						self.display(index, part)
+					})
+					router.exit('products/:pid', function({part, index, values}) {
+						self.display(index, null)
+					})
+					router.enter('products/:pid/features', function({part, index, values}) {
+						self.display(index, part)
+					})
+					router.exit('products/:pid/features', function({part, index, values}) {
+						self.display(index, null)
+					})
+					router.enter('products/:pid/features/:fid', function({part, index, values}) {
+						self.display(index, part)
+					})
+					router.exit('products/:pid/features/:fid', function({part, index, values}) {
+						self.display(index, null)
+					})
+				}
+				
+				display(index, value) {
+					
+					let element = document.querySelector(`#container-${index}`)
+					if (value === null) {
+						element.innerHTML = ''
+					} else {
+						element.innerHTML = `
+							<div class="container">
+								<section class="content">
+									<header class="header">${value}</header>
+									<section class="scroll">
+										<section class="one">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus accumsan, urna eget dictum dictum, dolor mauris congue turpis, sed finibus lectus odio a tortor. Quisque dapibus, nisi at ultrices pulvinar, turpis erat finibus justo, quis imperdiet orci risus ac eros. Proin fermentum dui in euismod sollicitudin. Ut eget neque metus. Suspendisse potenti. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed interdum ipsum vel magna iaculis rutrum a eu mi. Donec posuere felis vitae vestibulum tincidunt. Aenean a mauris ullamcorper, vehicula nibh in, posuere lorem. Donec at egestas risus. Quisque imperdiet dictum pellentesque. Etiam nec sem urna. Vivamus sit amet nulla enim. Praesent justo libero, malesuada sit amet nunc at, condimentum tincidunt felis. Phasellus congue dui odio, sed posuere lorem pellentesque ut. In congue rutrum nunc at feugiat. Sed lacinia, nisl id faucibus rhoncus, orci lorem ullamcorper lacus, sed congue quam magna in ligula. Morbi ac purus a nisi finibus sollicitudin. Vivamus elementum blandit mauris, sed fringilla velit bibendum vulputate. Phasellus ut suscipit ligula, in commodo augue. Morbi ut tempus ante. Sed quis sagittis mauris.</section>
+										<section class="two">Phasellus leo lacus, imperdiet id nunc quis, molestie fermentum sem. Pellentesque molestie mauris at urna placerat, eu molestie risus feugiat. In hac habitasse platea dictumst. Nullam dictum aliquam dictum. Nulla sed egestas magna. Donec laoreet, libero ac fringilla lacinia, nunc elit lacinia lorem, ac ullamcorper ipsum purus vitae quam. Sed tincidunt pretium congue. Integer semper volutpat justo nec elementum. Nullam pellentesque orci eu faucibus dignissim. Proin viverra nulla non metus pellentesque, et rhoncus arcu vehicula. Aliquam elementum, odio et condimentum tristique, dolor odio dictum neque, sit amet egestas dui massa a justo. Ut eget nulla porttitor, tristique lectus sed, pulvinar augue. Integer quis augue nisi.</section>
+										<section class="three">Fusce condimentum metus vitae elit gravida maximus. Donec quis varius enim, vitae porttitor enim. Quisque at suscipit massa. Suspendisse quis enim euismod, porttitor turpis eu, pretium augue. Fusce eget maximus diam. Aliquam fermentum pharetra neque et condimentum. Aenean at urna volutpat, rutrum risus id, blandit est. Ut bibendum dui vitae suscipit dapibus. Proin laoreet in leo sagittis pulvinar. Vestibulum vitae nisl neque. Duis quis urna eget massa fringilla pretium quis a enim. Pellentesque blandit maximus libero, quis venenatis erat eleifend vel. Morbi vitae mi ultrices, vulputate ante id, elementum leo.Mauris vitae tempor tellus. Maecenas nec venenatis metus. Duis et vulputate leo. Duis id velit et dui fermentum facilisis eu quis est. Suspendisse potenti. Pellentesque tempor a urna in aliquet. Aliquam iaculis tincidunt arcu, in tristique eros. Aenean placerat elit id feugiat eleifend. Cras at turpis pellentesque ex lobortis aliquam. Duis fermentum ex a odio dapibus vehicula. Praesent maximus lobortis turpis, quis hendrerit tortor volutpat ut.</section>
+									</section>
+								</section>
+								<section class="void" id="container-${index + 1}"></section>
+							</div>
+						`
+					}
+				}
+				
+				test() {
+					
+					this.display(0, 'zero')
+					this.display(1, 'one')
+					this.display(2, 'two')
+					this.display(3, 'three')
+					this.display(4, 'four')
+					this.display(5, 'five')
+					this.display(6, 'six')
+					this.display(6, null)
+					this.display(5, null)
+					this.display(4, null)
+					this.display(3, null)
+				}
+			}
+			
+			new Example()
+			
+		</script>
+		
+	</body>
+</html>

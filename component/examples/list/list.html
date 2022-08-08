@@ -1,0 +1,22 @@
+
+<div>
+	list.html
+	<div data-component="./list-item.html"></div>
+	<div data-component="./list-item.html"></div>
+	<div data-component="./list-item.html"></div>
+	<div data-component="./list-item.html"></div>
+	<div data-component="./list-item.html"></div>
+	<div data-component="./list-item.html"></div>
+	
+	<script type="module">
+		
+		import { Component } from '../../source/component.js'
+		
+		Component.ready(function(component, system) {
+			console.log('list.html ready')
+			console.log('list.html children length: ' + component.children.length)
+			this.child(0).clone()
+		})
+		
+	</script>
+</div>

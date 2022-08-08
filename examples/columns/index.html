@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>All: Columns & Router</title>
+		<link rel="stylesheet" type="text/css" href="./main.css"/>
+	</head>
+	<body>
+		<div class="modal container">
+			<div data-component="./main.html"></div>
+		</div>
+		
+		<script type="module">
+			
+			import { Component } from '../../component/source/component.js'
+			import { Router } from '../../router/source/router.js'
+			import { Bus } from '../../bus/source/bus.js'
+			
+			class Example {
+				
+				constructor() {
+					
+					if (window.location.hash) {
+						window.location.href = window.location.href.replace(location.hash, '')
+					}
+					window.router = new Router()
+					window.bus = new Bus()
+					this.watch(router)
+					Component.start(function(component) {
+						this.top = component
+					}.bind(this))
+				}
+				
+				watch(router) {
+					
+					router.register('products', {
+						enter: function({ path, part, index, then }) {
+							let component = this.top.child(0)
+							component.child('void').redirect('./columns/products.html', { part }, then)
+						}.bind(this),
+						exit : function({ path, part, index, then }) {
+							let component = this.top.child(0)
+							component.child('void').redirect('./empty.html', {}, then)
+						}.bind(this)
+					})
+					
+					router.register('1', {
+						enter: function({ path, part, then }) {
+							let component = this.top.child(0)
+							component.child('void').redirect('./columns/infinite.html', { path, part }, then)
+						}.bind(this),
+						exit : function({ path, part, then }) {
+							let component = this.top.child(0)
+							component.child('void').redirect('./empty.html', {}, then)
+						}.bind(this)
+					})
+					
+					router.register('list', {
+						enter: function({ path, part, then }) {
+							let component = this.top.child(0)
+							component.child('void').redirect('./columns/list.html', { path, part }, then)
+						}.bind(this),
+						exit : function({ path, part, then }) {
+							let component = this.top.child(0)
+							component.child('void').redirect('./empty.html', {}, then)
+						}.bind(this)
+					})
+				}
+			}
+			
+			new Example()
+			
+		</script>
+		
+	</body>
+</html>

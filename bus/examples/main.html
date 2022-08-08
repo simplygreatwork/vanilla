@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>Vanilla Web: Bus</title>
+	</head>
+	<body>
+		<div data-component="./main.html"></div>
+		<script type="module">
+			
+			import { Bus } from '../source/bus.js'
+			
+			let bus = new Bus()
+			let off = bus.on('hello', function(name) {
+				console.log(`Hello ${name}!`)
+				off()
+			})
+			bus.emit('hello', 'World')
+			
+		</script>
+	</body>
+</html>

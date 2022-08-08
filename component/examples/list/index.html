@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>Vanilla Web</title>
+	</head>
+	<body>
+		<div data-component="./main.html"></div>
+		<script type="module">
+			
+			import { Component } from '../../source/component.js'
+			import { System } from '../shared/scripts/system.js'
+			
+			class Application {
+				
+				constructor() {
+					
+					let system = window.system = new System()
+					let router = system.router
+					Component.start(function() {
+						console.log('index.html ready')
+					})
+				}
+			}
+			
+			new Application()
+			
+		</script>
+	</body>
+</html>

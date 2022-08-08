@@ -1,0 +1,21 @@
+<div>
+	
+	<script type="module">
+		
+		import { Component } from '../../source/component.js'
+		
+		Component.ready(function(component, system) {
+			let router = system.router
+			router.bus.on(`route:0`, function(part, done) {
+				this.element.setAttribute('data-component', `./${part}.html`)
+				done()
+			}.bind(this))
+			if (window.location.hash == '') {
+				window.location.hash = '#/start'
+			} else {
+				router.fire()
+			}
+		})
+		
+	</script>
+</div>

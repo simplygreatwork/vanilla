@@ -1,0 +1,26 @@
+
+<div class="flex-container">
+	<div data-role="content" style="width:100px;">
+		<div>column two header</div>
+		<ul>
+			<li>a</li>
+			<li>b</li>
+			<li>c</li>
+		</ul>
+	</div>
+	<div data-component="./empty.html"></div>
+	<script type="module">
+		
+		import { Component } from '../../source/component.js'
+		
+		Component.ready(function(component, bus) {
+			console.log('column-two ready')
+			console.log('component.children.length: ' + component.children.length)
+			let router = window.system.router
+			if (router.parts[2]) {
+				component.children[0].element.setAttribute('data-component', `./${router.parts[2]}.html`)
+			}
+		})
+		
+	</script>
+</div>

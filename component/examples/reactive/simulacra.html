@@ -1,0 +1,38 @@
+<div>
+	
+	<template id="product">
+		<h1 class="name"></h1>
+		<div class="details">
+			<div><span class="size"></span></div>
+			<h4 class="vendor"></h4>
+		</div>
+	</template>
+	
+	<script type="module">
+		
+		import { Component } from '../../source/component.js'
+		
+		Component.ready(function(component, system) {
+			let object = {
+				name: 'Pumpkin Spice Latte',
+				details: {
+					size: [ 'Tall', 'Grande', 'Venti' ],
+					vendor: 'Coffee Co.'
+				}
+			}
+			let template = document.querySelector('#product')
+			let node = simulacra(object, [template, {
+				name: '.name',
+				details: ['.details', {
+					size: '.size',
+					vendor: '.vendor'
+				}]
+			}])
+			component.element.appendChild(node)
+			window.setTimeout(function() {
+				object.name = 'Americano'
+			}, 1000)
+		})
+		
+	</script>
+</div>

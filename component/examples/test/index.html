@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>Vanilla Web</title>
+	</head>
+	<body>
+		<script type="module">
+			
+			let path = './other.html'
+			fetch(`${path}?time=${new Date().getTime()}`)
+			.then(function(response) {
+				return response.text()
+			}).then(function(html) {
+				console.log('loaded: ' + html)
+				let fragment = document.createRange().createContextualFragment(html)
+				let element = document.createElement('div')
+				element.appendChild(fragment)
+				document.body.appendChild(element)
+			}.bind(this))
+			
+		</script>
+	</body>
+</html>

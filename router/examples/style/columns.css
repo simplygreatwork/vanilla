@@ -1,0 +1,27 @@
+.modal {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+.container {
+	display: flex;
+	box-sizing: border-box;
+}
+.content {
+	box-sizing: border-box;
+	width: 200px;
+	display: flex;
+	flex-direction: column;
+}
+.void {
+	box-sizing: border-box;
+	display: flex;
+}
+.header {
+	margin-bottom:10px;
+}
+.scroll {
+	overflow-y: scroll;
+}

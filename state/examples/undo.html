@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>State: Undo</title>
+	</head>
+	<body>
+		<script type="module">
+			
+			import { Store } from '../source/store.js'
+			import history from '../source/history.js'
+			import logging from '../source/logging.js'
+			import proxy from '../source/proxy.js'
+			
+			let store = new Store()
+			.use(history)
+			.use(logging)
+			.use(proxy)
+			
+			store.set(['todos'], [])
+			let todos = store.select(['todos'])
+			todos.update([], (array) => [...array, { id : 1 }])
+			store.mark('marker')
+			todos.update([], (array) => [...array, { id : 2 }])
+			todos.update([], (array) => [...array, { id : 3 }])
+			let array = ['undo', 'undo', 'undo', 'redo', 'redo', 'redo'].forEach(function(each) {
+				store[each]()
+				console.log(`todos: ${JSON.stringify(todos.get())}`)
+			})
+			store.undo('marker')
+			console.log(`todos: ${JSON.stringify(todos.get())}`)
+			
+		</script>
+	</body>
+</html>

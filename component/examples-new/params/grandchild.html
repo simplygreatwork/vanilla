@@ -1,0 +1,19 @@
+
+<div>
+	
+	<div>grandchild.html</div>
+	
+	<script type="module">
+		
+		import { Component } from '../../source/component.js'
+		
+		Component.ready(function(component, system) {
+			console.log('grandchild.html ready')
+			console.log('component.data: ' + JSON.stringify(component.data))
+			system.bus.on('data', function(data) {
+				console.log('data: ' + data)
+			})
+		})
+		
+	</script>
+</div>

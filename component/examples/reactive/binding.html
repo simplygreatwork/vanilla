@@ -1,0 +1,45 @@
+<div>
+	
+	<div data-key="name"></div>
+	<div data-key="age_"></div>
+	
+	<script type="module">
+		
+		import { Component } from '../../source/component.js'
+		import observable from '../../../observable/source/observable.js'
+		
+		Component.ready(function(component, system) {
+			
+			const data = observable({})
+			bind(data, component.element)
+			revise(data, component.element)
+			Object.assign(data, {
+				name: 'Mickey Mouse',
+				age: 36
+			})
+			window.setTimeout(function() {
+				data.name = 'Donald Duck'
+				data.age = 47
+				console.log(JSON.stringify(data, null, 2))
+			}, 1000)
+		})
+		
+		function bind(observable, element) {
+			
+			observable.on('value', function(key, value, object) {
+				let element_ = element.querySelector(`[data-key="${key}"]`)
+				if (element_) element_.innerHTML = value
+			})
+		}
+		
+		function revise(observable, element) {
+			
+			observable.unshift('value:age', function(value, object, interrupt) {
+				let element_ = element.querySelector(`[data-key="age_"]`)
+				if (element_) element_.innerHTML = value
+				interrupt()
+			})
+		}
+		
+	</script>
+</div>

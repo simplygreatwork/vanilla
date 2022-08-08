@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>State: Observe</title>
+	</head>
+	<body>
+		<script type="module">
+			
+			import { Store } from '../source/store.js'
+			import logging from '../source/logging.js'
+			import { clone } from '../source/utility.js'
+			
+			let store = new Store()
+			.use(logging)
+			
+			store.set('value', {})
+			store.on('change', function({ value, path }) {
+				console.log(`change: ${JSON.stringify(value)}`)
+			})
+			store.set('value', { value : 'hello' })
+			store.set('value', { value : 'hello again' })
+			
+		</script>
+	</body>
+</html>

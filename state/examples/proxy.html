@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>State: Proxy</title>
+	</head>
+	<body>
+		<script type="module">
+			
+			import { Store } from '../source/store.js'
+			import history from '../source/history.js'
+			import logging from '../source/logging.js'
+			import proxy from '../source/proxy.js'
+			
+			let store = new Store()
+			.use(history)
+			.use(logging)
+			.use(proxy)
+			
+			store.set(['a'], {})
+			store.set(['a', 'b'], {})
+			store.set(['a', 'b', 'c'], {})
+			store.root.a.b.c = 5
+			console.log(`store.root.a.b.c: ` + store.root.a.b.c)
+			console.log(`store.get(): ${JSON.stringify(store.get())}`)
+			
+			store.root.bag = { value : 0 }
+			store.root.bag.one = { value : 1 }
+			store.root.bag.one.two = { value : 2 }
+			console.log(`store.get([]): ${JSON.stringify(store.get([]))}`)
+			console.log(`store.root: ${JSON.stringify(store.root)}`)
+			store.root.bag.one.on('change', function({ path, value }) {
+				console.log(`store.root.bag.one changed: ${JSON.stringify(value)}`)
+			})
+			store.root.bag.one.two.value.on('change', function({ path, value }) {
+				console.log(`store.root.bag.one.two.value changed: ${JSON.stringify(value)}`)
+			})
+			store.root.bag.one.two.value = 300
+			store.root.bag.one = { value : 111 }
+			store.root.bag.one.two = {}
+			store.root.bag.one.two.on = 12345
+			console.log(`store.root.bag.one.two.on: ${store.root.bag.one.two.on}`)
+			
+		</script>
+	</body>
+</html>

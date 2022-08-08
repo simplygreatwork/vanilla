@@ -1,0 +1,16 @@
+
+<div>
+	first.html
+	<div data-component="./second.html"></div>
+	
+	<script type="module">
+		
+		import { Component } from '../../source/component.js'
+		
+		Component.ready(function(component, bus) {
+			console.log('first.html ready')
+			console.log('first.html children length: ' + component.children.length)
+		})
+		
+	</script>
+</div>

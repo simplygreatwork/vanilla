@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>Vanilla Web</title>
+	</head>
+	<body>
+		
+		<div id="main">
+			<div data-key="name"></div>
+			<div data-key="age_"></div>
+		</div>
+		
+		<script type="module">
+			
+			import observable from '../source/observable.js'
+			
+			function bind(observable, element) {
+				
+				observable.on('value', function(key, value, object) {
+					let element_ = element.querySelector(`[data-key="${key}"]`)
+					if (element_) element_.innerHTML = value
+				})
+			}
+			
+			function revise(observable, element) {
+				
+				observable.unshift('value:age', function(value, object, interrupt) {
+					let element_ = element.querySelector(`[data-key="age_"]`)
+					if (element_) element_.innerHTML = value
+					interrupt()
+				})
+			}
+			
+			const data = observable({})
+			let element = document.querySelector('#main')
+			bind(data, element)
+			revise(data, element)
+			Object.assign(data, {
+				name: 'Mickey Mouse',
+				age: 36
+			})
+			window.setTimeout(function() {
+				data.name = 'Donald Duck'
+				data.age = 47
+				console.log(JSON.stringify(data, null, 2))
+			}, 1000)
+			
+		</script>
+	</body>
+</html>

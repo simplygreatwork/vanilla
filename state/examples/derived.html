@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>State: Derived</title>
+	</head>
+	<body>
+		<script type="module">
+			
+			import { Store } from '../source/store.js'
+			import logging from '../source/logging.js'
+			import { clone } from '../source/utility.js'
+			
+			let store = new Store()
+			.use(logging)
+			
+			store.set(['derived'], {})
+			store.set(['derived', 'value'], {})
+			store.set(['derived', 'value', 'x'], 0)
+			console.log(`store.get(['derived', 'value']: ${JSON.stringify(store.get(['derived', 'value']))}`)
+			let derived = store.derive(['derived', 'value'], function(value) {
+				value = JSON.parse(JSON.stringify(value))
+				value.x = value.x + ' !!!'
+				return value
+			})
+			console.log(`derived.get(): ${JSON.stringify(derived.get([]))}`)
+			derived.on('change', function({ value, path }) {
+				console.log(`derived changed: ${JSON.stringify(value)}`)
+			})
+			store.set(['derived', 'value'], { x: 1 })
+			store.set(['derived', 'value'], { x: 2 })
+			store.set(['derived', 'value'], { x: 3 })
+			console.log(`derived.get(): ${JSON.stringify(derived.get([]))}`)
+			
+			store.set(['contact'], { first: 'Captain', last: 'Amazing', phone: '0123456789' })
+			derived = store.derive(['contact'], function(value) {
+				value = clone(value)
+				value.name = `Mr. ${value.first} ${value.last}`
+				delete value.first
+				delete value.last
+				let array = value.phone.split('')
+				value.phone = [take(array, 3), '-', take(array, 3), '-', take(array, 4)].join('')
+				return value
+			})
+			derived.on('change', function({ value, path }) {
+				console.log(`derived changed: ${JSON.stringify(value)}`)
+			})
+			store.set(['contact'], { first: 'Captain', last: 'America', phone: '5120123456' })
+			console.log(`derived.get(): ${JSON.stringify(derived.get([]))}`)
+			
+			// todo: test with two derived from the same store path
+			
+			function take(array, count) {
+				
+				let result = []
+				Array(count).fill().map(function() {
+					result.push(array.shift())
+				})
+				return result.join('')
+			}
+			
+		</script>
+	</body>
+</html>

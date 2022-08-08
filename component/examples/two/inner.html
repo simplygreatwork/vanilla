@@ -1,0 +1,23 @@
+
+<div>
+	<div data-role="title">inner.html</div>
+	<script type="module">
+		
+		import { Component } from '../../source/component.js'
+		
+		Component.ready(function(component, system) {
+			console.log('inner.html ready')
+			component.element.querySelector('[data-role=title]').innerHTML = 'inner.html!!!'
+			component.on('attached', function() {
+				console.log('inner.html attached')
+			})
+			system.bus.on('data', function(data) {
+				console.log('data: ' + data)
+			})
+			setTimeout(function() {
+				this.element.setAttribute('data-component', './supercool.html')
+			}.bind(this), 1000)
+		})
+		
+	</script>
+</div>

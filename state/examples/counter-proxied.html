@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>State: Proxied Counter</title>
+	</head>
+	<body>
+		<script type="module">
+			
+			import { Store } from '../source/store.js'
+			import history from '../source/history.js'
+			import logging from '../source/logging.js'
+			import proxy from '../source/proxy.js'
+			
+			let store = new Store()
+			.use(history)
+			.use(logging)
+			.use(proxy)
+			
+			store.root.counter = 0
+			store.root.counter.on('change', function({ path, value }) {
+				console.log(`counter: ${value}`)
+			})
+			store.root.counter = store.root.counter + 1
+			store.root.counter = store.root.counter + 1
+			store.root.counter = store.root.counter + 1
+			
+		</script>
+	</body>
+</html>

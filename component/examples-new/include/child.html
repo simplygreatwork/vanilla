@@ -1,0 +1,17 @@
+
+<div>
+	
+	<div>child.html</div>
+	<div data-component="./grandchild.html"></div>
+	
+	<script type="module">
+		
+		import { Component } from '../../source/component.js'
+		
+		Component.ready(function(component, bus) {
+			console.log('child.html ready')
+			console.log('child.html children length: ' + component.children.length)
+		})
+		
+	</script>
+</div>

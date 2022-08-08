@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>State: Select</title>
+	</head>
+	<body>
+		<script type="module">
+			
+			import { Store } from '../source/store.js'
+			import logging from '../source/logging.js'
+			
+			let store = new Store()
+			.use(logging)
+			
+			store.set('a', {})
+			store.set('a.b', {})
+			store.set('a.b.c', {})
+			let a = store.select(['a'])
+			a.set('value', 'aa')
+			a.set('b.value', 'bb')
+			let b = store.select('a.b')
+			b.set('c.value', 'cc')
+			b.set('value', 'bbbbb')
+			let c = store.select('a.b.c')
+			c.set('value', 'ccccc')
+			console.log(`store: ${JSON.stringify(store.get())}`)
+			console.log(`a: ${JSON.stringify(a.get())}`)
+			console.log(`b: ${JSON.stringify(b.get())}`)
+			console.log(`c: ${JSON.stringify(c.get())}`)
+			
+		</script>
+	</body>
+</html>
