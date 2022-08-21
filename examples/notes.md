@@ -40,3 +40,7 @@ exit : function({ path, part, index, then }) {
 	console.log(`exit ${path}`)
 	component.child('void').load('./empty.html', {}, then)
 }.bind(this)
+
+going to need a way to append new components dynamically - e.g. list items
+
+if router then is never called, warn

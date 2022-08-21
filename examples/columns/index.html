@@ -27,43 +27,47 @@
 					}
 					window.router = new Router()
 					window.bus = new Bus()
-					this.watch(router)
 					Component.start(function(component) {
 						this.top = component
+						this.watch(router)
 					}.bind(this))
 				}
 				
 				watch(router) {
 					
+					let component = this.top.child(0)
 					router.register('products', {
 						enter: function({ path, part, index, then }) {
-							let component = this.top.child(0)
-							component.child('void').redirect('./columns/products.html', { part }, then)
+							component.child('void').redirect('./products.html', { part }, then)
 						}.bind(this),
 						exit : function({ path, part, index, then }) {
-							let component = this.top.child(0)
 							component.child('void').redirect('./empty.html', {}, then)
 						}.bind(this)
 					})
 					
 					router.register('1', {
 						enter: function({ path, part, then }) {
-							let component = this.top.child(0)
-							component.child('void').redirect('./columns/infinite.html', { path, part }, then)
+							component.child('void').redirect('./infinite.html', { path, part }, then)
 						}.bind(this),
 						exit : function({ path, part, then }) {
-							let component = this.top.child(0)
+							component.child('void').redirect('./empty.html', {}, then)
+						}.bind(this)
+					})
+					
+					router.register('include', {
+						enter: function({ path, part, then }) {
+							component.child('void').redirect('./include.html', { path, part }, then)
+						}.bind(this),
+						exit : function({ path, part, then }) {
 							component.child('void').redirect('./empty.html', {}, then)
 						}.bind(this)
 					})
 					
 					router.register('list', {
 						enter: function({ path, part, then }) {
-							let component = this.top.child(0)
-							component.child('void').redirect('./columns/list.html', { path, part }, then)
+							component.child('void').redirect('./list.html', { path, part }, then)
 						}.bind(this),
 						exit : function({ path, part, then }) {
-							let component = this.top.child(0)
 							component.child('void').redirect('./empty.html', {}, then)
 						}.bind(this)
 					})

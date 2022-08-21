@@ -1,0 +1,41 @@
+
+<div>
+	<div class="item"><a class="item" href="#/dynamic/0">Clonable Item</a></div>
+	
+	<style>
+		a.item {
+			color:black;
+			text-decoration: none;
+			box-sizing: border-box;
+			display: block;
+			padding:0;
+			block-size: 100%;
+		}
+		div.item {
+			display: block;
+			border-bottom: 1px solid lightgrey;
+			padding-left:6px;
+			padding-top:10px;
+			padding-bottom:10px;
+		}
+		div.item.selected {
+			background-color:#DDDDFF;
+		}
+	</style>
+	
+	<script type="module">
+		
+		import { Component } from '../../component/source/component.js'
+		
+		Component.ready(function(component) {
+			
+			console.log('list-item.html ready')
+			this.element.querySelector('a.item').href = `#/list/${this.data.key}`
+			this.element.querySelector('a.item').innerText = this.data.label
+			this.element.querySelector('div.item').onmousedown = function() {
+				this.element.querySelector('div.item').classList.toggle('selected')
+			}.bind(this)
+		})
+		
+	</script>
+</div>

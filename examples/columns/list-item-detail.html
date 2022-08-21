@@ -3,7 +3,7 @@
 	
 	<div class="container">
 		<section class="content">
-			<header class="title"></header>
+			<header class="title">Dynamic Item</header>
 			<section class="scroll">
 				<section name="lorem" data-component="./lorem.html"></section>
 			</section>
@@ -16,15 +16,7 @@
 		import { Component } from '../../component/source/component.js'
 		
 		Component.ready(function(component, bus) {
-			this.element.querySelector('.title').innerText = `Features`
-			router.register('products/:pid/features/:fid', {
-				enter: function({ path, part, index, then }) {
-					component.child('void').redirect('./columns/feature.html', { part }, then)
-				},
-				exit : function({ path, part, index, then }) {
-					component.child('void').redirect('./empty.html', {}, then)
-				}
-			})
+			this.element.querySelector('.title').innerText = `Dynamic Item "${component.data.part}"`
 		})
 		
 	</script>

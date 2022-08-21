@@ -1,4 +1,5 @@
 <div>
+	
 	<div class="container">
 		<section class="content">
 			<header class="title">Products</header>
@@ -13,11 +14,11 @@
 		
 		import { Component } from '../../component/source/component.js'
 		
-		Component.ready(function(component, bus) {
+		Component.ready(function(component) {
 			this.element.querySelector('.title').innerText = `Product "${component.data.part}"`
 			router.register('products/:pid/features', {
 				enter: function({ path, part, index, then }) {
-					component.child('void').redirect('./columns/features.html', { part }, then)
+					component.child('void').redirect('./features.html', { part }, then)
 				},
 				exit : function({ path, part, index, then }) {
 					component.child('void').redirect('./empty.html', {}, then)

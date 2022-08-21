@@ -1,9 +1,9 @@
 
-import { Bus, install as install_bus } from '../../bus/source/bus.js'
+import { Bus } from '../../bus/source/bus.js'
 
 export class Router {
 	
-	constructor(bus) {
+	constructor() {
 		
 		window.addEventListener('hashchange', function() {
 			this.go(window.location.hash)

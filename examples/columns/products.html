@@ -14,10 +14,10 @@
 		
 		import { Component } from '../../component/source/component.js'
 		
-		Component.ready(function(component, bus) {
+		Component.ready(function(component) {
 			router.register('products/:pid', {
 				enter: function({ path, part, index, then }) {
-					component.child('void').redirect('./columns/product.html', { part }, then)
+					component.child('void').redirect('./product.html', { part }, then)
 				}.bind(this),
 				exit : function({ path, part, index, then }) {
 					component.child('void').redirect('./empty.html', {}, then)

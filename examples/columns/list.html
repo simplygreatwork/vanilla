@@ -1,0 +1,44 @@
+
+<div>
+	<div class="container">
+		<section class="content">
+			<header class="title">Dynamic List</header>
+			<section class="scroll">
+				<section name="list-item" data-component="./list-item.html"></section>
+			</section>
+		</section>
+		<section name="void" class="void" data-component="./empty.html"></section>
+	</div>
+	
+	<script type="module">
+		
+		import { Component } from '../../component/source/component.js'
+		
+		Component.ready(function(component, bus) {
+			
+			let clonable = component.child('list-item')
+			let items = create_items().reverse().map(function(each) {
+				clonable.clone({ key: each, label: `Item ${each}` })
+			})
+			clonable.element.style.display = 'none'
+			router.register('list/:id', {
+				enter: function({ path, part, index, then }) {
+					console.log(`enter list item ${part}`)
+					component.child('void').redirect('./list-item-detail.html', { path, part }, then)
+				},
+				exit : function({ path, part, index, then }) {
+					console.log(`exit list item ${part}`)
+					component.child('void').redirect('./empty.html', {}, then)
+				}
+			})
+		})
+		
+		function create_items() {
+			
+			return new Array(26).fill(0).map(function(each, index) {
+				return index + 1
+			})
+		}
+		
+	</script>
+</div>

@@ -7,14 +7,14 @@ export class Component {
 	static counter = 0
 	static recent = null
 	
-	static start(then) {
+	static start(fn) {
 		
 		let component = new Component()
 		component.fragment = document.body
 		let off = component.on('ready', function(component, path) {
 			off()
 			if (false) component.observe()
-			then(component)
+			fn(component)
 		})
 		component.scan()
 	}
@@ -22,6 +22,7 @@ export class Component {
 	static ready(fn) {
 		
 		let component = Component.recent
+		component.fn = fn
 		component.element.appendChild(component.content)
 		let off = component.on('ready', function(component, path) {
 			component.observe()
@@ -34,13 +35,14 @@ export class Component {
 		component.scan()
 	}
 	
-	constructor(path, options) {
+	constructor(path) {
 		
-		install_bus(this)
 		this.id = Component.counter++
 		this.path = path
-		this.bus = new Bus()
+		this.data = {}
 		this.children = []
+		this.bus = new Bus()
+		install_bus(this)
 	}
 	
 	scan() {
@@ -51,18 +53,16 @@ export class Component {
 		this.process(Array.from(fragment.querySelectorAll(`[data-component]`)))
 	}
 	
-	// I can kick off loading asynchrously
-	// but fire ready synchronously for now
-	
 	process(array) {
 		
 		if (array.length === 0) return this.emit('ready', this, this.path)
 		let each = array.pop()
 		let path = each.dataset.component
-		let component = new Component(path, {})
+		let component = new Component(path)
 		component.name = each.getAttribute('name')
-		this.children.push(component)
 		component.element = each
+		component.parent = this
+		this.children.push(component)
 		let off = component.on('ready', function(component_) {
 			this.process(array)
 			if (false) off()
@@ -136,9 +136,31 @@ export class Component {
 		}
 	}
 	
-	clone() {
+	clone(data) {
 		
-		let element = this.element.cloneNode()
+		let deep = true
+		let element = this.element.cloneNode(deep)
 		let component = new Component()
+		component.element = element
+		component.path = this.path
+		component.fn = this.fn
+		component.data = data
+		this.parent.children.push(component)
+		this.insertBefore(element, this.element)
+		component.render()
+	}
+	
+	insertBefore(newNode, referenceNode) {
+		referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling)
+	}
+	
+	insertAfter(newNode, referenceNode) {
+		referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling)
+	}
+	
+	render() {
+		
+		if (false) console.log(`render ${this.path} ${JSON.stringify(this.data)}`)
+		this.fn.apply(this, [this])
 	}
 }
