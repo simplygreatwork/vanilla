@@ -1,0 +1,56 @@
+
+<div>
+	<div class="container">
+		<section class="content">
+			<header class="title">Tasks</header>
+			<section class="scroll">
+				<section name="task" data-component="./task.html"></section>
+				<button name="task-new" class="task-new">New Task</button>
+			</section>
+		</section>
+		<section name="void" class="void" data-component="../shared/views/empty.html"></section>
+	</div>
+	
+	<script type="module">
+		
+		import { Component } from '../../component/source/component.js'
+		import { Bus } from '../../bus/source/bus.js'
+		import { manage_single_selection } from './list.js'
+		
+		Component.ready(function(component) {
+			
+			let bus = new Bus()
+			let template = component.child('task')
+			let clonable = template
+			let items = create_items()
+			this.index = {}
+			items.forEach(function(item, index) {
+				let link = `#/tasks/${item.id}`
+				clonable = clonable.clone({ item, link, bus })
+				this.index[item.id] = { item, component: clonable }
+			}.bind(this))
+			template.element.style.display = 'none'
+			manage_single_selection(component, bus)
+			
+			router.register('tasks/:id', {
+				enter: function({ path, part, index, values, then }) {
+					let item = this.index[values.id].item
+					component.child('void').redirect('./detail.html', { item, bus }, then)
+				}.bind(this),
+				exit : function({ path, part, index, then }) {
+					component.child('void').redirect('../shared/views/empty.html', {}, then)
+				}
+			})
+		})
+		
+		function create_items() {
+			
+			return [
+				{ id: 1, title: 'Empty Trash!', done: false },
+				{ id: 2, title: 'Feed Dog!', done: false },
+				{ id: 3, title: 'Water Plant!', done: false }
+			]
+		}
+		
+	</script>
+</div>

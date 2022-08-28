@@ -1,0 +1,31 @@
+
+<div>
+	
+	<div class="container">
+		<section class="content">
+			<section class="scroll">
+				<input name="title" class="task-title">
+				<button value="Done" class="task-done">Complete Task</button>
+				<button value="Delete" class="task-delete">Delete Task</button>
+			</section>
+		</section>
+		<section name="void" data-component="../shared/views/empty.html" class="void"></section>
+	</div>
+	
+	<script type="module">
+		
+		import { Component } from '../../component/source/component.js'
+		
+		Component.ready(function(component) {
+			
+			let { item, bus } = this.data
+			let element = component.element.querySelector('input.task-title')
+			element.value = item.title
+			element.oninput = function() {
+				item.title = element.value
+				bus.emit(`item-changed:${item.id}`, { item: item })
+			}.bind(this)
+		})
+		
+	</script>
+</div>

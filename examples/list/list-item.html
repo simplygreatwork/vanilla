@@ -24,18 +24,8 @@
 	</style>
 	
 	<script type="module">
-		
-		import { Component } from '../../component/source/component.js'
-		
-		Component.ready(function(component) {
-			
-			console.log('list-item.html ready')
-			this.element.querySelector('a.item').href = `#/list/${this.data.key}`
-			this.element.querySelector('a.item').innerText = this.data.label
-			this.element.querySelector('div.item').onmousedown = function() {
-				this.element.querySelector('div.item').classList.toggle('selected')
-			}.bind(this)
-		})
-		
+		import {_} from './list-item.js'
+		_()
 	</script>
+	
 </div>

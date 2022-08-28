@@ -1,0 +1,29 @@
+
+<div>
+	<div class="container">
+		<section class="content">
+			<header class="title">Products</header>
+			<section class="scroll">
+				<section name="lorem" data-component="./lorem.html"></section>
+			</section>
+		</section>
+		<section name="void" data-component="./empty.html" class="void"></section>
+	</div>
+	
+	<script type="module">
+		
+		import { Component } from '../../component/source/component.js'
+		
+		Component.ready(function(component) {
+			router.register('products/:pid', {
+				enter: function({ path, part, index, then }) {
+					component.child('void').redirect('./product.html', { part }, then)
+				}.bind(this),
+				exit: function({ path, part, index, then }) {
+					component.child('void').redirect('./empty.html', {}, then)
+				}.bind(this)
+			})
+		})
+		
+	</script>
+</div>

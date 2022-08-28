@@ -1,9 +1,8 @@
-
 <div>
 	
 	<div class="container">
 		<section class="content">
-			<header class="title"></header>
+			<header class="title">Products</header>
 			<section class="scroll">
 				<section name="lorem" data-component="./lorem.html"></section>
 			</section>
@@ -16,12 +15,12 @@
 		import { Component } from '../../component/source/component.js'
 		
 		Component.ready(function(component) {
-			this.element.querySelector('.title').innerText = `Features`
-			router.register('products/:pid/features/:fid', {
+			this.element.querySelector('.title').innerText = `Product "${component.data.part}"`
+			router.register('products/:pid/features', {
 				enter: function({ path, part, index, then }) {
-					component.child('void').redirect('./feature.html', { part }, then)
+					component.child('void').redirect('./features.html', { part }, then)
 				},
-				exit : function({ path, part, index, then }) {
+				exit: function({ path, part, index, then }) {
 					component.child('void').redirect('./empty.html', {}, then)
 				}
 			})

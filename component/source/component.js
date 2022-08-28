@@ -143,19 +143,13 @@ export class Component {
 		let component = new Component()
 		component.element = element
 		component.path = this.path
+		component.parent = this.parent
 		component.fn = this.fn
 		component.data = data
 		this.parent.children.push(component)
-		this.insertBefore(element, this.element)
+		this.element.after(element)
 		component.render()
-	}
-	
-	insertBefore(newNode, referenceNode) {
-		referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling)
-	}
-	
-	insertAfter(newNode, referenceNode) {
-		referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling)
+		return component
 	}
 	
 	render() {

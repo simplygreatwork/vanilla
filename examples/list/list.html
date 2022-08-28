@@ -1,0 +1,103 @@
+
+<div>
+	<div class="container">
+		<section class="content">
+			<header class="title">Dynamic List</header>
+			<section class="scroll">
+				<section name="list-item" data-component="./list-item.html"></section>
+			</section>
+		</section>
+		<section name="void" class="void" data-component="../shared/views/empty.html"></section>
+	</div>
+	
+	<script type="module">
+		
+		import { Component } from '../../component/source/component.js'
+		import { Bus } from '../../bus/source/bus.js'
+		
+		Component.ready(function(component) {
+			
+			let { bus } = manage_single_selection(component)
+			let template = component.child('list-item')
+			let clonable = template
+			let items = create_items().map(function(each) {
+				clonable = clonable.clone({ key: each, label: `Item ${each}`, bus: bus })
+			})
+			template.element.style.display = 'none'
+			router.register('list/:id', {
+				enter: function({ path, part, index, then }) {
+					component.child('void').redirect('./list-item-detail.html', { path, part }, then)
+				},
+				exit : function({ path, part, index, then }) {
+					component.child('void').redirect('../shared/views/empty.html', {}, then)
+				}
+			})
+		})
+		
+		function create_items() {
+			
+			return new Array(20).fill(0).map(function(each, index) {
+				return index + 1
+			})
+		}
+		
+		function manage_single_selection(component) {
+			
+			let bus = new Bus()
+			let state = {}
+			state.selections = []
+			bus.on('selected', function(component) {
+				single_select(component, state)
+			})
+			document.onkeydown = function(event) {
+				if (event.key == 'ArrowDown') {
+					let child = find_next(component, state.selections[0])
+					child.element.querySelector('div.item').classList.toggle('selected')
+					window.location.hash = `#/list/${child.data.key}`
+					bus.emit('selected', child)
+					return true
+				}
+				if (event.key == 'ArrowUp') {
+					let child = find_previous(component, state.selections[0])
+					child.element.querySelector('div.item').classList.toggle('selected')
+					window.location.hash = `#/list/${child.data.key}`
+					bus.emit('selected', child)
+					return true
+				}
+			}.bind(this)
+			return { bus, state }
+		}
+		
+		function single_select(component, state) {
+			
+			state.selections.forEach(function(each) {
+				each.element.querySelector('div.item').classList.remove('selected')
+			})
+			state.selections  = []
+			state.selections.push(component)
+		}
+		
+		function find_next(component, child) {
+			
+			let result = null
+			component.children.forEach(function(each, index) {
+				if (each == child) {
+					result = component.child(index + 1)
+				}
+			})
+			return result
+		}
+		
+		function find_previous(component, child) {
+			
+			let result = null
+			component.children.forEach(function(each, index) {
+				if (each == child) {
+					result = component.child(index - 1)
+				}
+			})
+			return result
+		}
+		
+	</script>
+</div>

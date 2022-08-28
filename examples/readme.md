@@ -9,3 +9,6 @@
 - dim the empty text in the empty page
 - approach component.js differently
 	- load the page, then extract the javascript to be primary
+	- 
+	
+- get rid  of Example class and use functional instead

@@ -4,10 +4,10 @@
 		<section class="content">
 			<header class="title">Products</header>
 			<section class="scroll">
-				<section name="lorem" data-component="./lorem.html"></section>
+				<section name="lorem" data-component="../shared/views/lorem.html"></section>
 			</section>
 		</section>
-		<section name="void" data-component="./empty.html" class="void"></section>
+		<section name="void" data-component="../shared/views/empty.html" class="void"></section>
 	</div>
 	
 	<script type="module">
@@ -20,8 +20,8 @@
 				enter: function({ path, part, index, then }) {
 					component.child('void').redirect('./features.html', { part }, then)
 				},
-				exit : function({ path, part, index, then }) {
-					component.child('void').redirect('./empty.html', {}, then)
+				exit: function({ path, part, index, then }) {
+					component.child('void').redirect('../shared/views/empty.html', {}, then)
 				}
 			})
 		})

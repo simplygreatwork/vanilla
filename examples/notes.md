@@ -43,4 +43,6 @@ exit : function({ path, part, index, then }) {
 
 going to need a way to append new components dynamically - e.g. list items
 
-if router then is never called, warn
+if router then is never called with "then", warn
+
+test using references modules, also test embedded in data url

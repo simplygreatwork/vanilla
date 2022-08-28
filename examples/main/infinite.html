@@ -4,10 +4,10 @@
 		<section class="content">
 			<header class="title">Infinite</header>
 			<section class="scroll">
-				<section name="lorem" data-component="../shared/views/lorem.html"></section>
+				<section name="lorem" data-component="./lorem.html"></section>
 			</section>
 		</section>
-		<section name="void" class="void" data-component="../shared/views/empty.html"></section>
+		<section name="void" class="void" data-component="./empty.html"></section>
 	</div>
 	
 	<script type="module">
@@ -22,7 +22,7 @@
 					component.child('void').redirect('./infinite.html', { path, part }, then)
 				}.bind(this),
 				exit : function({ path, part, then }) {
-					component.child('void').redirect('../shared/views/empty.html', {}, then)
+					component.child('void').redirect('./empty.html', {}, then)
 				}.bind(this)
 			})
 		})

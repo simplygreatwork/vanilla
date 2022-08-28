@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>Columns</title>
+		<link rel="stylesheet" type="text/css" href="./main.css"/>
+	</head>
+	<body>
+		<div class="modal container">
+			<div data-component="./main.html"></div>
+		</div>
+		
+		<script type="module">
+			
+			import { Component } from '../../component/source/component.js'
+			import { Router } from '../../router/source/router.js'
+			
+			class Example {
+				
+				constructor() {
+					
+					if (window.location.hash) {
+						window.location.href = window.location.href.replace(location.hash, '')
+					}
+					window.router = new Router()
+					Component.start(function(component) {
+						this.watch(router, component)
+					}.bind(this))
+				}
+				
+				watch(router, component) {
+					
+					component = component.child(0)
+					router.register('products', {
+						enter: function({ path, part, index, then }) {
+							component.child('void').redirect('./products.html', { part }, then)
+						}.bind(this),
+						exit : function({ path, part, index, then }) {
+							component.child('void').redirect('./empty.html', {}, then)
+						}.bind(this)
+					})
+					
+					router.register('1', {
+						enter: function({ path, part, then }) {
+							component.child('void').redirect('./infinite.html', { path, part }, then)
+						}.bind(this),
+						exit : function({ path, part, then }) {
+							component.child('void').redirect('./empty.html', {}, then)
+						}.bind(this)
+					})
+					
+					router.register('include', {
+						enter: function({ path, part, then }) {
+							component.child('void').redirect('./include.html', { path, part }, then)
+						}.bind(this),
+						exit : function({ path, part, then }) {
+							component.child('void').redirect('./empty.html', {}, then)
+						}.bind(this)
+					})
+					
+					router.register('list', {
+						enter: function({ path, part, then }) {
+							component.child('void').redirect('./list.html', { path, part }, then)
+						}.bind(this),
+						exit : function({ path, part, then }) {
+							component.child('void').redirect('./empty.html', {}, then)
+						}.bind(this)
+					})
+					
+					router.register('test', {
+						enter: function({ path, part, then }) {
+							component.child('void').redirect('./test.html', { path, part }, then)
+						}.bind(this),
+						exit : function({ path, part, then }) {
+							component.child('void').redirect('./empty.html', {}, then)
+						}.bind(this)
+					})
+				}
+			}
+			
+			new Example()
+			
+		</script>
+		
+	</body>
+</html>

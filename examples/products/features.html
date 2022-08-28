@@ -1,0 +1,31 @@
+
+<div>
+	
+	<div class="container">
+		<section class="content">
+			<header class="title"></header>
+			<section class="scroll">
+				<section name="lorem" data-component="../shared/views/lorem.html"></section>
+			</section>
+		</section>
+		<section name="void" data-component="../shared/views/empty.html" class="void"></section>
+	</div>
+	
+	<script type="module">
+		
+		import { Component } from '../../component/source/component.js'
+		
+		Component.ready(function(component) {
+			this.element.querySelector('.title').innerText = `Features`
+			router.register('products/:pid/features/:fid', {
+				enter: function({ path, part, index, then }) {
+					component.child('void').redirect('./feature.html', { part }, then)
+				},
+				exit: function({ path, part, index, then }) {
+					component.child('void').redirect('../shared/views/empty.html', {}, then)
+				}
+			})
+		})
+		
+	</script>
+</div>

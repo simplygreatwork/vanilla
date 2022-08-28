@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
-		<title>Basic</title>
+		<title>Columns</title>
 		<link rel="stylesheet" type="text/css" href="../shared/style/main.css"/>
 	</head>
 	<body>
@@ -27,18 +27,18 @@
 					window.router = new Router()
 					Component.start(function(component) {
 						this.watch(router, component)
-						window.location.hash = '#/1/2/3/4'
+						window.location.hash = '#/include'
 					}.bind(this))
 				}
 				
 				watch(router, component) {
 					
-					router.register('1', {
+					router.register('include', {
 						enter: function({ path, part, then }) {
-							component.child('void').redirect('./infinite.html', { path, part }, then)
+							component.child('void').redirect('./include.html', { path, part }, then)
 						}.bind(this),
 						exit : function({ path, part, then }) {
-							component.child('void').redirect('./empty.html', {}, then)
+							component.child('void').redirect('../shared/views/empty.html', {}, then)
 						}.bind(this)
 					})
 				}
