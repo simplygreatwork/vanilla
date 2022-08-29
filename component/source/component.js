@@ -147,7 +147,7 @@ export class Component {
 		component.fn = this.fn
 		component.data = data
 		this.parent.children.push(component)
-		this.element.after(element)
+		this.element.before(element)
 		component.render()
 		return component
 	}

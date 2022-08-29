@@ -21,26 +21,26 @@
 			
 			let bus = new Bus()
 			let template = component.child('task')
-			let clonable = template
-			let items = create_items()
-			this.index = {}
-			items.forEach(function(item, index) {
-				let link = `#/tasks/${item.id}`
-				clonable = clonable.clone({ item, link, bus })
-				this.index[item.id] = { item, component: clonable }
-			}.bind(this))
-			template.element.style.display = 'none'
-			manage_single_selection(component, bus)
+			let index = {}
+			create_items().forEach(function(item) {
+				install_row(item, template, index, bus)
+			})
+			
+			// always manage the selection from the router
+			// need an id counter
 			
 			router.register('tasks/:id', {
-				enter: function({ path, part, index, values, then }) {
-					let item = this.index[values.id].item
+				enter: function({ path, part, values, then }) {
+					let item = index[values.id].item
 					component.child('void').redirect('./detail.html', { item, bus }, then)
 				}.bind(this),
-				exit : function({ path, part, index, then }) {
+				exit : function({ path, part, then }) {
 					component.child('void').redirect('../shared/views/empty.html', {}, then)
 				}
 			})
+			
+			manage_single_selection(component, bus)
+			listen(component, index, bus)
 		})
 		
 		function create_items() {
@@ -50,6 +50,25 @@
 				{ id: 2, title: 'Feed Dog!', done: false },
 				{ id: 3, title: 'Water Plant!', done: false }
 			]
+		}
+		
+		function install_row(item, template, index, bus) {
+			
+			let link = `#/tasks/${item.id}`
+			let component = template.clone({ item, link, bus })
+			index[item.id] = { item, component }
+			component.element.style.display = 'block'
+			template.element.style.display = 'none'
+		}
+		
+		function listen(component, index, bus) {
+			
+			component.element.querySelector('.task-new').onclick = function() {
+				let item = { id: 4, title: 'New Task!', done: false }
+				let template = component.child('task')
+				install_row(item, template, index, bus)
+				window.location.hash = `#/tasks/4`
+			}.bind(this)
 		}
 		
 	</script>
