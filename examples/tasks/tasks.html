@@ -15,7 +15,9 @@
 		
 		import { Component } from '../../component/source/component.js'
 		import { Bus } from '../../bus/source/bus.js'
-		import { manage_single_selection } from './list.js'
+		import { install_selection, select_row } from './selection.js'
+		
+		let counter = 0
 		
 		Component.ready(function(component) {
 			
@@ -26,12 +28,11 @@
 				install_row(item, template, index, bus)
 			})
 			
-			// always manage the selection from the router
-			// need an id counter
-			
 			router.register('tasks/:id', {
 				enter: function({ path, part, values, then }) {
 					let item = index[values.id].item
+					let row = index[values.id].row
+					select_row(row, bus)
 					component.child('void').redirect('./detail.html', { item, bus }, then)
 				}.bind(this),
 				exit : function({ path, part, then }) {
@@ -39,35 +40,37 @@
 				}
 			})
 			
-			manage_single_selection(component, bus)
+			install_selection(component, bus)
 			listen(component, index, bus)
 		})
 		
 		function create_items() {
 			
 			return [
-				{ id: 1, title: 'Empty Trash!', done: false },
-				{ id: 2, title: 'Feed Dog!', done: false },
-				{ id: 3, title: 'Water Plant!', done: false }
+				{ id: ++counter, title: 'Empty Trash!', done: false },
+				{ id: ++counter, title: 'Feed Dog!', done: false },
+				{ id: ++counter, title: 'Water Plant!', done: false }
 			]
 		}
 		
 		function install_row(item, template, index, bus) {
 			
 			let link = `#/tasks/${item.id}`
-			let component = template.clone({ item, link, bus })
-			index[item.id] = { item, component }
-			component.element.style.display = 'block'
+			let row = template.clone({ item, link, bus })
+			index[item.id] = { item, row }
+			row.element.style.display = 'block'
 			template.element.style.display = 'none'
+			return row
 		}
 		
 		function listen(component, index, bus) {
 			
 			component.element.querySelector('.task-new').onclick = function() {
-				let item = { id: 4, title: 'New Task!', done: false }
+				let id = ++counter
+				let item = { id, title: `Untitled Task ${id}`, done: false }
 				let template = component.child('task')
-				install_row(item, template, index, bus)
-				window.location.hash = `#/tasks/4`
+				let row = install_row(item, template, index, bus)
+				window.location.hash = row.data.link
 			}.bind(this)
 		}
 		

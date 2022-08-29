@@ -23,7 +23,7 @@
 			element.value = item.title
 			element.oninput = function() {
 				item.title = element.value
-				bus.emit(`item-changed:${item.id}`, { item: item })
+				bus.emit(`item-changed:${item.id}`, { item })
 			}.bind(this)
 		})
 		
