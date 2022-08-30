@@ -5,8 +5,8 @@
 		<section class="content">
 			<section class="scroll">
 				<input name="title" class="task-title">
-				<button value="Done" class="task-done">Complete Task</button>
-				<button value="Delete" class="task-delete">Delete Task</button>
+				<button class="task-done">Complete Task</button>
+				<button class="task-close">Close Task</button>
 			</section>
 		</section>
 		<section name="void" data-component="../shared/views/empty.html" class="void"></section>
@@ -18,13 +18,23 @@
 		
 		Component.ready(function(component) {
 			
+			let $ = component.element.querySelector.bind(component.element)
 			let { item, bus } = this.data
-			let element = component.element.querySelector('input.task-title')
+			let element = $('input.task-title')
 			element.value = item.title
 			element.oninput = function() {
 				item.title = element.value
 				bus.emit(`item-changed:${item.id}`, { item })
-			}.bind(this)
+			}
+			$('.task-done').onclick = function() {
+				item.done = true
+				bus.emit(`item-changed:${item.id}`, { item })
+			}
+			$('.task-close').onclick = function() {
+				item.closed = true
+				bus.emit(`item-changed:${item.id}`, { item })
+				bus.emit(`item-changed`, { item })
+			}
 		})
 		
 	</script>

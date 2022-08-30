@@ -26,8 +26,8 @@ export class Component {
 		component.element.appendChild(component.content)
 		let off = component.on('ready', function(component, path) {
 			component.observe()
-			window.setTimeout(function() {			// observe needs the timeout?
-				fn.apply(component, [component])		// second param was window.system
+			window.setTimeout(function() {				// observe needs the timeout?
+				fn.apply(component, [component])			// second param was window.system
 				component.emit('initialized', component)
 				off()
 			}, 1)
@@ -150,6 +150,13 @@ export class Component {
 		this.element.before(element)
 		component.render()
 		return component
+	}
+	
+	remove() {
+		
+		this.parent.children = this.parent.children.filter(value => value !== this)
+		this.parent = null
+		this.element.remove()
 	}
 	
 	render() {

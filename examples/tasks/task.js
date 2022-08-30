@@ -8,15 +8,21 @@ export function _() {
 		if (! component.data.item ) return
 		let { item, link, bus } = this.data
 		let element = this.element
-		let a = element.querySelector('a.item')
-		let div = element.querySelector('div.item')
-		a.href = `#/tasks/${item.id}`
+		let a = element.querySelector('a.row')
+		let div = element.querySelector('div.row')
+		a.href = link
 		a.innerText = item.title
 		div.onmousedown = function() {
 			window.location.hash = link
 		}
 		bus.on(`item-changed:${item.id}`, function({ item }) {
 			a.innerText = item.title
+			if (item.done) a.classList.add('done')
+			if (! item.done) a.classList.remove('done')
+			if (item.closed) {
+				component.remove()
+				window.location.hash = `#/tasks`	
+			}
 		})
 	})
 }

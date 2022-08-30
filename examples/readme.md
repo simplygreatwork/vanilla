@@ -12,3 +12,4 @@
 	- 
 	
 - get rid  of Example class and use functional instead
+- need better selectors for scoping

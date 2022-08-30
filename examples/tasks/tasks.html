@@ -4,7 +4,7 @@
 		<section class="content">
 			<header class="title">Tasks</header>
 			<section class="scroll">
-				<section name="task" data-component="./task.html"></section>
+				<section name="task-template" data-component="./task.html"></section>
 				<button name="task-new" class="task-new">New Task</button>
 			</section>
 		</section>
@@ -22,20 +22,20 @@
 		Component.ready(function(component) {
 			
 			let bus = new Bus()
-			let template = component.child('task')
+			let template = component.child('task-template')
 			let index = {}
-			create_items().forEach(function(item) {
+			default_items().forEach(function(item) {
 				install_row(item, template, index, bus)
 			})
 			
 			router.register('tasks/:id', {
-				enter: function({ path, part, values, then }) {
+				enter: function({ values, then }) {
 					let item = index[values.id].item
 					let row = index[values.id].row
 					select_row(row, bus)
 					component.child('void').redirect('./detail.html', { item, bus }, then)
-				}.bind(this),
-				exit : function({ path, part, then }) {
+				},
+				exit : function({ then }) {
 					component.child('void').redirect('../shared/views/empty.html', {}, then)
 				}
 			})
@@ -44,7 +44,7 @@
 			listen(component, index, bus)
 		})
 		
-		function create_items() {
+		function default_items() {
 			
 			return [
 				{ id: ++counter, title: 'Empty Trash!', done: false },
@@ -65,13 +65,17 @@
 		
 		function listen(component, index, bus) {
 			
-			component.element.querySelector('.task-new').onclick = function() {
+			let $ = component.element.querySelector.bind(component.element)
+			$('.task-new').onclick = function() {
 				let id = ++counter
 				let item = { id, title: `Untitled Task ${id}`, done: false }
-				let template = component.child('task')
+				let template = component.child('task-template')
 				let row = install_row(item, template, index, bus)
 				window.location.hash = row.data.link
-			}.bind(this)
+			}
+			bus.on(`item-changed`, function({ item }) {
+				if (item.closed) delete index[item.id]
+			})
 		}
 		
 	</script>
