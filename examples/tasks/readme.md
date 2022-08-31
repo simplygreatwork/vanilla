@@ -14,3 +14,4 @@ need a method in component for: remove()
 	for example, when closing tasks
 
 solve favicon issues
+investigate why the timeout bug occurs when coming back to the page

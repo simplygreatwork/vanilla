@@ -1,9 +1,8 @@
 
 <div>
-	
 	<div class="container">
 		<section class="content">
-			<header class="title">Dynamic Item</header>
+			<header class="title">Item</header>
 			<section class="scroll">
 				<section name="lorem" data-component="../shared/views/lorem.html"></section>
 			</section>
@@ -15,8 +14,9 @@
 		
 		import { Component } from '../../component/source/component.js'
 		
-		Component.ready(function(component, bus) {
-			this.element.querySelector('.title').innerText = `Dynamic Item "${component.data.part}"`
+		Component.ready(function(component) {
+			let { item } = this.data
+			this.element.querySelector('.title').innerText = item.title
 		})
 		
 	</script>

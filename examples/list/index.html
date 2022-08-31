@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
 		<title>List</title>
 		<link rel="stylesheet" type="text/css" href="../shared/style/main.css"/>
+		<link rel="stylesheet" type="text/css" href="./index.css"/>
 	</head>
 	<body>
 		<div class="modal container">
@@ -21,9 +22,7 @@
 				
 				constructor() {
 					
-					if (window.location.hash) {
-						window.location.href = window.location.href.replace(location.hash, '')
-					}
+					window.location.hash = '#'
 					window.router = new Router()
 					Component.start(function(component) {
 						this.watch(router, component)
@@ -35,7 +34,7 @@
 					
 					router.register('list', {
 						enter: function({ path, part, then }) {
-							component.child('void').redirect('./list.html', { path, part }, then)
+							component.child('void').redirect('./items.html', { path, part }, then)
 						}.bind(this),
 						exit : function({ path, part, then }) {
 							component.child('void').redirect('../shared/views/empty.html', {}, then)
