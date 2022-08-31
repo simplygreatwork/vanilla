@@ -1,5 +1,5 @@
 
-import { Bus } from '../../bus/source/bus.js'
+import { Bus } from '../../../bus/source/bus.js'
 
 export function install_selection(component, bus) {
 	

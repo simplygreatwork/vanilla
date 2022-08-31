@@ -5,11 +5,11 @@ export function _() {
 	
 	Component.ready(function(component) {
 		
-		if (! component.data.item ) return
+		if (! this.data.item ) return
+		let $ = component.element.querySelector.bind(component.element)
 		let { item, link, bus } = this.data
-		let element = this.element
-		let a = element.querySelector('a.row')
-		let div = element.querySelector('div.row')
+		let a = $('a.row')
+		let div = $('div.row')
 		a.href = link
 		a.innerText = item.title
 		div.onmousedown = function() {

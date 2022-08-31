@@ -1,14 +1,13 @@
 
 <div>
-	
 	<div class="container">
 		<section class="content">
-			<header class="title">Dynamic Item</header>
+			<header class="title">Item</header>
 			<section class="scroll">
-				<section name="lorem" data-component="./lorem.html"></section>
+				<section name="lorem" data-component="../shared/views/lorem.html"></section>
 			</section>
 		</section>
-		<section name="void" data-component="./empty.html" class="void"></section>
+		<section name="void" data-component="../shared/views/empty.html" class="void"></section>
 	</div>
 	
 	<script type="module">
@@ -16,7 +15,8 @@
 		import { Component } from '../../component/source/component.js'
 		
 		Component.ready(function(component) {
-			this.element.querySelector('.title').innerText = `Dynamic Item "${component.data.part}"`
+			let { item } = this.data
+			this.element.querySelector('.title').innerText = item.title
 		})
 		
 	</script>

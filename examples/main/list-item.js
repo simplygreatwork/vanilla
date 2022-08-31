@@ -5,13 +5,18 @@ export function _() {
 	
 	Component.ready(function(component) {
 		
-		console.log('list-item.html ready')
-		let bus = component.data.bus
-		this.element.querySelector('a.item').href = `#/list/${this.data.key}`
-		this.element.querySelector('a.item').innerText = this.data.label
-		this.element.querySelector('div.item').onmousedown = function() {
-			this.element.querySelector('div.item').classList.toggle('selected')
-			bus.emit('selected', component)
-		}.bind(this)
+		if (! this.data.item ) return
+		let $ = component.element.querySelector.bind(component.element)
+		let { item, link, bus } = this.data
+		let a = $('a.row')
+		let div = $('div.row')
+		a.href = link
+		a.innerText = item.title
+		div.onmousedown = function() {
+			window.location.hash = link
+		}
+		bus.on(`item-changed:${item.id}`, function({ item }) {
+			a.innerText = item.title
+		})
 	})
 }
