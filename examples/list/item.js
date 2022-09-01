@@ -17,5 +17,5 @@ export function _() {
 		bus.on(`item-changed:${item.id}`, function({ item }) {
 			a.innerText = item.title
 		})
-	}, { spread:true })
+	})
 }

@@ -15,8 +15,8 @@
 		
 		import { Component } from '../../component/source/component.js'
 		
-		Component.ready(function({ component }) {
-			this.element.querySelector('.title').innerText = `Features`
+		Component.ready(function({ component, $ }) {
+			$('.title').innerText = `Features`
 			router.register('products/:pid/features/:fid', {
 				enter: function({ path, part, index, then }) {
 					component.child('void').redirect('./feature.html', { part }, then)
@@ -25,7 +25,7 @@
 					component.child('void').redirect('./empty.html', {}, then)
 				}
 			})
-		}, { spread : true })
+		})
 		
 	</script>
 </div>

@@ -9,5 +9,5 @@ export function _() {
 		counter++
 		component.element.querySelector('.value').innerText = counter
 		console.log(`counter: ${counter}`)
-	}, { spread : true })
+	})
 }

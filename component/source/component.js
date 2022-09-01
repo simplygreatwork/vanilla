@@ -39,7 +39,7 @@ export class Component {
 	static invoke(component, fn, options) {
 		
 		options = options || {}
-		if (false) options.spread = true
+		if (true) options.spread = true
 		if (! options.spread) return fn.apply(component, [component])
 		let $ = component.element.querySelector.bind(component.element)
 		fn.apply(component, [{ component, $ }])

@@ -14,8 +14,8 @@
 		
 		import { Component } from '../../component/source/component.js'
 		
-		Component.ready(function({ component }) {
-			this.element.querySelector('.title').innerText = `Product "${component.data.part}"`
+		Component.ready(function({ component, $ }) {
+			$('.title').innerText = `Product "${component.data.part}"`
 			router.register('products/:pid/features', {
 				enter: function({ path, part, index, then }) {
 					component.child('void').redirect('./features.html', { part }, then)
@@ -24,7 +24,7 @@
 					component.child('void').redirect('../shared/views/empty.html', {}, then)
 				}
 			})
-		}, { spread : true })
+		})
 		
 	</script>
 </div>

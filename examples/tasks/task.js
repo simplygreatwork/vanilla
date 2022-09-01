@@ -23,5 +23,5 @@ export function _() {
 				window.location.hash = `#/tasks`	
 			}
 		})
-	}, { spread:true })
+	})
 }
