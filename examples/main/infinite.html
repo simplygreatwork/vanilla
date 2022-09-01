@@ -14,7 +14,7 @@
 		
 		import { Component } from '../../component/source/component.js'
 		
-		Component.ready(function(component) {
+		Component.ready(function({ component }) {
 			
 			this.element.querySelector('.title').innerText = `Column "${component.data.part}"`
 			router.register(next_path(component.data.path), {
@@ -25,7 +25,7 @@
 					component.child('void').redirect('./empty.html', {}, then)
 				}.bind(this)
 			})
-		})
+		}, { spread : true })
 		
 		function next_path(path) {
 			

@@ -6,9 +6,9 @@
 		
 		import { Component } from '../../component/source/component.js'
 		
-		Component.ready(function(component) {
+		Component.ready(function({ component }) {
 			console.log('include-item.html ready')
-		})
+		}, { spread : true })
 		
 	</script>
 </div>

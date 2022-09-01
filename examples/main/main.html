@@ -29,12 +29,12 @@
 		
 		import { Component } from '../../component/source/component.js'
 		
-		Component.ready(function(component) {
+		Component.ready(function({ component }) {
 			document.querySelector('#state').onchange = function(element) {
 				window.location.hash = this.value
 				return false
 			}
-		})
+		}, { spread : true })
 		
 	</script>
 </div>

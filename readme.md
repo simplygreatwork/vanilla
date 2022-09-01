@@ -1,7 +1,6 @@
 
 ## Overview
-
-These are tiny libraries to use as infrastructure for JavaScript single page applications with single file components
+- These are tiny libraries to use as infrastructure for JavaScript single page applications with single file components
 
 ## Goals
 - ideal for building prototypes quickly
@@ -16,3 +15,4 @@ These are tiny libraries to use as infrastructure for JavaScript single page app
 - lightweight state management (model)
 
 ## No magic
+- 

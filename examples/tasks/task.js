@@ -3,10 +3,9 @@ import { Component } from '../../component/source/component.js'
 
 export function _() {
 	
-	Component.ready(function(component) {
+	Component.ready(function({ component, $ }) {
 		
 		if (! this.data.item ) return
-		let $ = component.element.querySelector.bind(component.element)
 		let { item, link, bus } = this.data
 		let a = $('a.row')
 		let div = $('div.row')
@@ -24,5 +23,5 @@ export function _() {
 				window.location.hash = `#/tasks`	
 			}
 		})
-	})
+	}, { spread:true })
 }

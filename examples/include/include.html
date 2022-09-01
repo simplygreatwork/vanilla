@@ -11,8 +11,10 @@
 		
 		import { Component } from '../../component/source/component.js'
 		
-		Component.ready(function(component) {
+		Component.ready_(function({ component, $ }) {
 			console.log('include.html ready')
+			console.log('component: ' + component)
+			console.log('$: ' + $)
 		})
 		
 	</script>

@@ -18,7 +18,7 @@
 		
 		let counter = 0
 		
-		Component.ready(function(component) {
+		Component.ready(function({ component }) {
 			
 			let bus = new Bus()
 			let template = component.child('template')
@@ -40,7 +40,8 @@
 			})
 			
 			install_selection(component, bus)
-		})
+			
+		}, { spread : true })
 		
 		function default_items() {
 			

@@ -19,7 +19,7 @@
 		
 		let counter = 0
 		
-		Component.ready(function(component) {
+		Component.ready(function({ component, $ }) {
 			
 			let bus = new Bus()
 			let template = component.child('task-template')
@@ -41,8 +41,9 @@
 			})
 			
 			install_selection(component, bus)
-			listen(component, index, bus)
-		})
+			listen(component, $, index, bus)
+			
+		}, { spread: true })
 		
 		function default_items() {
 			
@@ -63,9 +64,8 @@
 			return row
 		}
 		
-		function listen(component, index, bus) {
+		function listen(component, $, index, bus) {
 			
-			let $ = component.element.querySelector.bind(component.element)
 			$('.task-new').onclick = function() {
 				let id = ++counter
 				let item = { id, title: `Untitled Task ${id}`, done: false }

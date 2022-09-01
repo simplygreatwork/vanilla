@@ -11,7 +11,7 @@ export class Component {
 		
 		let component = new Component()
 		component.fragment = document.body
-		let off = component.on('ready', function(component, path) {
+		let off = component.on('ready', function(component) {
 			off()
 			if (false) component.observe()
 			fn(component)
@@ -19,20 +19,30 @@ export class Component {
 		component.scan()
 	}
 	
-	static ready(fn) {
+	static ready(fn, options) {
 		
 		let component = Component.recent
 		component.fn = fn
+		component.options = options
 		component.element.appendChild(component.content)
-		let off = component.on('ready', function(component, path) {
+		let off = component.on('ready', function(component) {
 			component.observe()
-			window.setTimeout(function() {				// observe needs the timeout?
-				fn.apply(component, [component])			// second param was window.system
+			window.setTimeout(function() {						// observe needs the timeout?
+				Component.invoke(component, fn, options)
 				component.emit('initialized', component)
 				off()
 			}, 1)
 		})
 		component.scan()
+	}
+	
+	static invoke(component, fn, options) {
+		
+		options = options || {}
+		if (false) options.spread = true
+		if (! options.spread) return fn.apply(component, [component])
+		let $ = component.element.querySelector.bind(component.element)
+		fn.apply(component, [{ component, $ }])
 	}
 	
 	constructor(path) {
@@ -142,6 +152,7 @@ export class Component {
 		let element = this.element.cloneNode(deep)
 		let component = new Component()
 		component.element = element
+		component.options = this.options
 		component.path = this.path
 		component.parent = this.parent
 		component.fn = this.fn
@@ -152,16 +163,16 @@ export class Component {
 		return component
 	}
 	
+	render() {
+		
+		if (false) console.log(`render ${this.path} ${JSON.stringify(this.data)}`)
+		Component.invoke(this, this.fn, this.options)
+	}
+	
 	remove() {
 		
 		this.parent.children = this.parent.children.filter(value => value !== this)
 		this.parent = null
 		this.element.remove()
-	}
-	
-	render() {
-		
-		if (false) console.log(`render ${this.path} ${JSON.stringify(this.data)}`)
-		this.fn.apply(this, [this])
 	}
 }

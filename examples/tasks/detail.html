@@ -16,9 +16,8 @@
 		
 		import { Component } from '../../component/source/component.js'
 		
-		Component.ready(function(component) {
+		Component.ready(function({ component, $ }) {
 			
-			let $ = component.element.querySelector.bind(component.element)
 			let { item, bus } = this.data
 			let element = $('input.task-title')
 			element.value = item.title
@@ -35,7 +34,7 @@
 				bus.emit(`item-changed:${item.id}`, { item })
 				bus.emit(`item-changed`, { item })
 			}
-		})
+		}, { spread:true })
 		
 	</script>
 </div>

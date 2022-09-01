@@ -14,10 +14,10 @@
 		
 		import { Component } from '../../component/source/component.js'
 		
-		Component.ready(function(component) {
+		Component.ready(function({ component }) {
 			let { item } = this.data
 			this.element.querySelector('.title').innerText = item.title
-		})
+		}, { spread : true })
 		
 	</script>
 </div>

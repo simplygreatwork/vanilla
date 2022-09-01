@@ -14,7 +14,7 @@
 		
 		import { Component } from '../../component/source/component.js'
 		
-		Component.ready(function(component) {
+		Component.ready(function({ component }) {
 			router.register('products/:pid', {
 				enter: function({ path, part, index, then }) {
 					component.child('void').redirect('./product.html', { part }, then)
@@ -23,7 +23,7 @@
 					component.child('void').redirect('./empty.html', {}, then)
 				}.bind(this)
 			})
-		})
+		}, { spread : true })
 		
 	</script>
 </div>
