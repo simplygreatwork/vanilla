@@ -4,10 +4,10 @@
 		<section class="content">
 			<header class="title">Items</header>
 			<section class="scroll">
-				<section name="template" data-component="./list-item.html"></section>
+				<section name="template" data-component="./item.html"></section>
 			</section>
 		</section>
-		<section name="void" class="void" data-component="./empty.html"></section>
+		<section name="void" class="void" data-component="../shared/views/empty.html"></section>
 	</div>
 	
 	<script type="module">
@@ -18,7 +18,7 @@
 		
 		let counter = 0
 		
-		Component.ready(function({ component }) {
+		Component.ready(function({ component, $ }) {
 			
 			let bus = new Bus()
 			let template = component.child('template')
@@ -32,19 +32,19 @@
 					let item = index[values.id].item
 					let row = index[values.id].row
 					select_row(row, bus)
-					component.child('void').redirect('./list-item-detail.html', { item, bus }, then)
+					component.child('void').redirect('./detail.html', { item, bus }, then)
 				},
-				exit : function({ then }) {
+				exit : function({ path, part, index, then }) {
 					component.child('void').redirect('../shared/views/empty.html', {}, then)
 				}
 			})
-			
 			install_selection(component, bus)
+			
 		})
 		
 		function default_items() {
 			
-			return new Array(20).fill(0).map(function(each, index) {
+			return new Array(10000).fill(0).map(function(each, index) {
 				let id = index + 1
 				return { id: id, title: `Item ${id}` }
 			})

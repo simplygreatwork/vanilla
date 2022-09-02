@@ -16,6 +16,7 @@
 		import { Component } from '../../component/source/component.js'
 		
 		Component.ready(function({ component, $ }) {
+			
 			$('.title').innerText = `Features`
 			router.register('products/:pid/features/:fid', {
 				enter: function({ path, part, index, then }) {

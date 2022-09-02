@@ -13,3 +13,8 @@
 	
 - get rid  of Example class and use functional instead
 - need better selectors for scoping
+- 
+- get all of the examples to run independently - but also in the main suite
+- simply default router registration exit view
+- 
+- if you clone a component - does it also clone it's children?

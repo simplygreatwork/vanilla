@@ -39,8 +39,6 @@ export class Component {
 	static invoke(component, fn, options) {
 		
 		options = options || {}
-		if (true) options.spread = true
-		if (! options.spread) return fn.apply(component, [component])
 		let $ = component.element.querySelector.bind(component.element)
 		fn.apply(component, [{ component, $ }])
 	}
@@ -151,6 +149,7 @@ export class Component {
 		let deep = true
 		let element = this.element.cloneNode(deep)
 		let component = new Component()
+		// use Object.assign
 		component.element = element
 		component.options = this.options
 		component.path = this.path

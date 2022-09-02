@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>List</title>
+		<link rel="stylesheet" type="text/css" href="../shared/style/main.css"/>
+		<link rel="stylesheet" type="text/css" href="./index.css"/>
+	</head>
+	<body>
+		<div class="modal container">
+			<div name="void" data-component="../shared/views/empty.html"></div>
+		</div>
+		
+		<script type="module">
+			
+			import { Component } from '../../component/source/component.js'
+			import { Router } from '../../router/source/router.js'
+			
+			class Example {
+				
+				constructor() {
+					
+					window.location.hash = '#'
+					window.router = new Router()
+					Component.start(function(component) {
+						this.watch(router, component)
+						window.location.hash = '#/list'
+					}.bind(this))
+				}
+				
+				watch(router, component) {
+					
+					router.register('list', {
+						enter: function({ path, part, then }) {
+							component.child('void').redirect('./items.html', { path, part }, then)
+						}.bind(this),
+						exit : function({ path, part, then }) {
+							component.child('void').redirect('../shared/views/empty.html', {}, then)
+						}.bind(this)
+					})
+				}
+			}
+			
+			new Example()
+			
+		</script>
+		
+	</body>
+</html>
