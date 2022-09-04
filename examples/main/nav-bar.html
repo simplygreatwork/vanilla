@@ -6,6 +6,7 @@
 		.navbar {
 			margin-top:20px;
 			margin-left:20px;
+			font-size:110%;
 		}
 	</style>
 	
@@ -20,7 +21,7 @@
 			router.on('change', function(hash) {
 				let array = window.location.hash.split('/')
 				array.shift()
-				let list = []							// should use array.reduce?
+				let list = []							// use array.reduce instead?
 				while (array.length > 0) {
 					list.unshift([...array])
 					array.pop()

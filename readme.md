@@ -10,9 +10,8 @@
 
 ## Features
 - lightweight message bus which supports overriding features (decoupling)
-- lightweight single file components (view)
+- lightweight single file components
 - lighweight router with enter and exit events per path part (controller)
 - lightweight state management (model)
 
 ## No magic
-- 
