@@ -10,7 +10,7 @@
 	<body>
 		<div class="modal">
 			<div class="header">
-				<div data-component="./navbar.html"></div>
+				<div data-component="./nav-bar.html"></div>
 			</div>
 			<div class="container">
 				<div data-component="./main.html"></div>
@@ -26,9 +26,7 @@
 				
 				constructor() {
 					
-					if (window.location.hash) {
-						window.location.href = window.location.href.replace(location.hash, '')
-					}
+					window.location.hash = '#'
 					window.router = new Router()
 					Component.start(function(component) {
 						this.watch(router, component)
@@ -39,48 +37,48 @@
 					
 					component = component.child(0)
 					router.register('products', {
-						enter: function({ path, part, index, then }) {
-							component.child('void').redirect('./products.html', { part }, then)
-						}.bind(this),
-						exit : function({ path, part, index, then }) {
-							component.child('void').redirect('./empty.html', {}, then)
-						}.bind(this)
+						enter: function({ path, then }) {
+							component.child('void').redirect('./products.html', { path }, then)
+						},
+						exit : function({ then }) {
+							component.child('void').redirect('../shared/views/empty.html', {}, then)
+						}
 					})
 					
 					router.register('1', {
 						enter: function({ path, part, then }) {
 							component.child('void').redirect('./infinite.html', { path, part }, then)
-						}.bind(this),
-						exit : function({ path, part, then }) {
-							component.child('void').redirect('./empty.html', {}, then)
-						}.bind(this)
+						},
+						exit : function({ then }) {
+							component.child('void').redirect('../shared/views/empty.html', {}, then)
+						}
 					})
 					
 					router.register('include', {
-						enter: function({ path, part, then }) {
-							component.child('void').redirect('./include.html', { path, part }, then)
-						}.bind(this),
-						exit : function({ path, part, then }) {
-							component.child('void').redirect('./empty.html', {}, then)
-						}.bind(this)
+						enter: function({ path, then }) {
+							component.child('void').redirect('./include.html', { path }, then)
+						},
+						exit : function({ then }) {
+							component.child('void').redirect('../shared/views/empty.html', {}, then)
+						}
 					})
 					
 					router.register('list', {
-						enter: function({ path, part, then }) {
-							component.child('void').redirect('./list.html', { path, part }, then)
-						}.bind(this),
-						exit : function({ path, part, then }) {
-							component.child('void').redirect('./empty.html', {}, then)
-						}.bind(this)
+						enter: function({ path, then }) {
+							component.child('void').redirect('./list.html', { path }, then)
+						},
+						exit : function({ then }) {
+							component.child('void').redirect('../shared/views/empty.html', {}, then)
+						}
 					})
 					
 					router.register('test', {
-						enter: function({ path, part, then }) {
-							component.child('void').redirect('./test.html', { path, part }, then)
-						}.bind(this),
-						exit : function({ path, part, then }) {
-							component.child('void').redirect('./empty.html', {}, then)
-						}.bind(this)
+						enter: function({ path, then }) {
+							component.child('void').redirect('./test.html', { path }, then)
+						},
+						exit : function({ then }) {
+							component.child('void').redirect('../shared/views/empty.html', {}, then)
+						}
 					})
 				}
 			}

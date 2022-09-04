@@ -19,10 +19,10 @@
 			
 			$('.title').innerText = `Features`
 			router.register('products/:pid/features/:fid', {
-				enter: function({ path, part, index, then }) {
-					component.child('void').redirect('./feature.html', { part }, then)
+				enter: function({ path, part, then }) {
+					component.child('void').redirect('./feature.html', { path, part }, then)
 				},
-				exit: function({ path, part, index, then }) {
+				exit: function({ then }) {
 					component.child('void').redirect('./empty.html', {}, then)
 				}
 			})

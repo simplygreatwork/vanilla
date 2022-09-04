@@ -1,0 +1,46 @@
+
+<div>
+	<div class="navbar"></div>
+	
+	<script type="module">
+		
+		import { Component } from '../../component/source/component.js'
+		import { find_top_level_component } from '../../component/source/utility.js'
+		import { walk_components } from '../../component/source/utility.js'
+		
+		Component.ready(function({ component, $ }) {
+			
+			router.on('change', function(hash) {
+				let array = window.location.hash.split('/')
+				array.shift()
+				let list = []							// should use array.reduce?
+				while (array.length > 0) {
+					list.unshift([...array])
+					array.pop()
+				}
+				$('.navbar').innerHTML = list.map(function(item) {
+					let path = item.join('/')
+					let title = find_title(path, component) || item.pop()
+					return `<a href="#/${path}">${title}</a>`
+				}).join(' &gt ')
+			})
+		})
+		
+		function find_title(path, component) {
+			
+			let top = find_top_level_component(component)
+			let result = null
+			walk_components(top, function(component) {
+				if (component.data.path == path) {
+					if (result === null) result = component
+				}
+			})
+			if (result) {
+				let element = result.element.querySelector('.title')
+				if (element) return element.innerHTML
+			}
+			return null
+		}
+		
+	</script>
+</div>

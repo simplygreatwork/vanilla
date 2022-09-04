@@ -1,5 +1,6 @@
 
 import { Bus } from '../../bus/source/bus.js'
+import { install as install_bus } from '../../bus/source/bus.js'
 
 export class Router {
 	
@@ -10,6 +11,8 @@ export class Router {
 		}.bind(this), false)
 		this.then = this.now = []
 		this.routes = { enter: new Bus(), exit: new Bus()}
+		this.bus = new Bus()
+		install_bus(this)
 		this.offs = []
 		this.changing = false			// need a queue
 	}
@@ -32,6 +35,7 @@ export class Router {
 		this.fire_exits(this.then.length - 1, marker, function() {
 			this.fire_enters(marker, marker, function() {
 				this.changing = false
+				this.emit('change', path)
 			}.bind(this))
 		}.bind(this))
 	}
