@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
-		<title>Columns</title>
+		<title>Products</title>
 		<link rel="stylesheet" type="text/css" href="../shared/style/main.css"/>
 	</head>
 	<body>
@@ -17,34 +17,21 @@
 			import { Component } from '../../component/source/component.js'
 			import { Router } from '../../router/source/router.js'
 			
-			class Example {
+			Component.start(function(component) {
 				
-				constructor() {
-					
-					if (window.location.hash) {
-						window.location.href = window.location.href.replace(location.hash, '')
+				window.location.hash = '#'
+				window.router = new Router()
+				
+				router.register('products', {
+					enter: function({ part, then }) {
+						component.child('void').redirect('./products.html', { part }, then)
+					},
+					exit : function({ then }) {
+						component.child('void').redirect('../shared/views/empty.html', {}, then)
 					}
-					window.router = new Router()
-					Component.start(function(component) {
-						this.watch(router, component)
-						window.location.hash = '#/products/1/features/2'
-					}.bind(this))
-				}
-				
-				watch(router, component) {
-					
-					router.register('products', {
-						enter: function({ path, part, index, then }) {
-							component.child('void').redirect('./products.html', { part }, then)
-						}.bind(this),
-						exit : function({ path, part, index, then }) {
-							component.child('void').redirect('../shared/views/empty.html', {}, then)
-						}.bind(this)
-					})
-				}
-			}
-			
-			new Example()
+				})
+				window.location.hash = '#/products/1/features/2'
+			})
 			
 		</script>
 		

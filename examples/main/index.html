@@ -21,12 +21,11 @@
 			
 			import { Component } from '../../component/source/component.js'
 			import { Router } from '../../router/source/router.js'
-
-			window.location.hash = '#'
-			window.router = new Router()
 			
 			Component.start(function(component) {
 				
+				window.location.hash = '#'
+				window.router = new Router()
 				component = component.child(0)
 				
 				router.register('products', {
@@ -76,10 +75,10 @@
 				
 				router.register('test', {
 					enter: function({ path, then }) {
-						component.child('void').redirect('./test.html', { path }, then)
+						component.child('void').rebase('../test').redirect('./test.html', { path }, then)
 					},
 					exit : function({ then }) {
-						component.child('void').redirect('../shared/views/empty.html', {}, then)
+						component.child('void').rebase(null).redirect('../shared/views/empty.html', {}, then)
 					}
 				})
 				

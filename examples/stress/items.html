@@ -27,7 +27,7 @@
 				install_row(item, template, index, bus)
 			})
 			
-			router.register('list/:id', {
+			router.register('stress/:id', {
 				enter: function({ values, then }) {
 					let item = index[values.id].item
 					let row = index[values.id].row
@@ -52,7 +52,7 @@
 		
 		function install_row(item, template, index, bus) {
 			
-			let link = `#/list/${item.id}`
+			let link = `#/stress/${item.id}`
 			let row = template.clone({ item, link, bus })
 			index[item.id] = { item, row }
 			row.element.style.display = 'block'

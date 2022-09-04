@@ -18,32 +18,21 @@
 			import { Component } from '../../component/source/component.js'
 			import { Router } from '../../router/source/router.js'
 			
-			class Example {
+			Component.start(function(component) {
 				
-				constructor() {
-					
-					window.location.hash = '#'
-					window.router = new Router()
-					Component.start(function(component) {
-						this.watch(router, component)
-						window.location.hash = '#/list'
-					}.bind(this))
-				}
+				window.location.hash = '#'
+				window.router = new Router()
 				
-				watch(router, component) {
-					
-					router.register('list', {
-						enter: function({ path, part, then }) {
-							component.child('void').redirect('./items.html', { path, part }, then)
-						}.bind(this),
-						exit : function({ path, part, then }) {
-							component.child('void').redirect('../shared/views/empty.html', {}, then)
-						}.bind(this)
-					})
-				}
-			}
-			
-			new Example()
+				router.register('stress', {
+					enter: function({ path, part, then }) {
+						component.child('void').redirect('./items.html', { path, part }, then)
+					},
+					exit : function({ then }) {
+						component.child('void').redirect('../shared/views/empty.html', {}, then)
+					}
+				})
+				window.location.hash = '#/stress'
+			})
 			
 		</script>
 		
