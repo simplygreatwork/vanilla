@@ -70,6 +70,7 @@ export class Component {
 		component.name = each.getAttribute('name')
 		component.element = each
 		component.parent = this
+		component.base = this.base
 		this.children.push(component)
 		let off = component.on('ready', function(component_) {
 			this.process(array)
@@ -80,11 +81,12 @@ export class Component {
 	
 	populate() {
 		
-		let path = this.element.dataset.component
+		let path = this.resolve_path()
 		fetch(`${path}?time=${new Date().getTime()}`)
 		.then(function(response) {
 			return response.text()
 		}).then(function(html) {
+			html = this.resolve_links(html)
 			this.element.innerHTML = ''
 			Component.recent = this
 			this.fragment = document.createRange().createContextualFragment(html)
@@ -173,5 +175,27 @@ export class Component {
 		this.parent.children = this.parent.children.filter(value => value !== this)
 		this.parent = null
 		this.element.remove()
+	}
+	
+	rebase(base) {
+		
+		this.base = base
+		return this
+	}
+	
+	resolve_path() {
+		
+		let path = this.element.dataset.component
+		if (path.startsWith('./')) {
+			if (this.base) path = this.base + path.slice(1)
+		}
+		return path
+	}
+	
+	resolve_links(text) {
+		
+		if (this.base) text = text.replace(`from './`, `from '${this.base}/`)
+		if (this.base) text = text.replace(`from "./`, `from "${this.base}/`)
+		return text
 	}
 }

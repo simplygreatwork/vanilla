@@ -4,7 +4,7 @@
 	height:400px;
 }
 .header {
-	height:10vh;
+	height:5vh;
 }
 .title {
 	font-weight:bold;
@@ -36,7 +36,7 @@
 }
 .scroll {
 	overflow-y: scroll;
-	height:90vh;
+	height:95vh;
 }
 header.empty {
 	color:lightgray;

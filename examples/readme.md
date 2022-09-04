@@ -18,3 +18,13 @@
 - simply default router registration exit view
 - 
 - if you clone a component - does it also clone it's children?
+- get Component.invoke to work with Component.start
+- simplify Example's to not use class
+- 
+
+strategy for rebasing
+everything will work locally
+but need to rebase inside index.html to include in the main view
+component.child('void').rebase('../list').redirect('./list.html', { path }, then)
+
+first column in main should be a list

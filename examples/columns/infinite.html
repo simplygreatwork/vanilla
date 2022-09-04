@@ -20,10 +20,10 @@
 			router.register(next_path(component.data.path), {
 				enter: function({ path, part, then }) {
 					component.child('void').redirect('./infinite.html', { path, part }, then)
-				}.bind(this),
+				},
 				exit : function({ path, part, then }) {
 					component.child('void').redirect('../shared/views/empty.html', {}, then)
-				}.bind(this)
+				}
 			})
 		})
 		
