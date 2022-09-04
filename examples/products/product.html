@@ -2,7 +2,7 @@
 	
 	<div class="container">
 		<section class="content">
-			<header class="title">Products</header>
+			<header class="title">Product</header>
 			<section class="scroll">
 				<section name="lorem" data-component="../shared/views/lorem.html"></section>
 			</section>
@@ -17,10 +17,10 @@
 		Component.ready(function({ component, $ }) {
 			$('.title').innerText = `Product "${component.data.part}"`
 			router.register('products/:pid/features', {
-				enter: function({ path, part, index, then }) {
-					component.child('void').redirect('./features.html', { part }, then)
+				enter: function({ path, part, then }) {
+					component.child('void').redirect('./features.html', { path, part }, then)
 				},
-				exit: function({ path, part, index, then }) {
+				exit: function({ then }) {
 					component.child('void').redirect('../shared/views/empty.html', {}, then)
 				}
 			})
