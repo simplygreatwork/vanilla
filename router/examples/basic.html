@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="./style/columns.css"/>
+		<title>Router: Basic</title>
+		<style>
+			#state {
+				border:0px solid black;
+				outline:1px dotted #212121;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="modal container">
+			<div class="container">
+				<section class="content">
+					<select id="state" multiple=true size=20>
+						<option>#/begin</option>
+						<option>#/1</option>
+						<option>#/1/2</option>
+						<option>#/1/2/3</option>
+						<option>#/1/2/3/4</option>
+						<option>#/1/2/3/4/5</option>
+						<option>#/1/2/3/4/5/6</option>
+						<option>#/end</option>
+					</select>
+				</section>
+				<section class="void">
+					<div class="container">
+						<section class="content">
+							<header class="header">Output</header>
+							<section class="scroll" id="output">
+							</section>
+						</section>
+						<section class="void"></section>
+					</div>
+				</section>
+			</div>
+		</div>	
+		
+		<script type="module">
+			
+			import { Router } from '../source/router.js'
+			import { install as install_printer } from '../../printer/source/printer.js'
+			
+			let router = new Router()
+			install_printer('#output')
+			prepare_inputs()
+			register(router, '1')
+			
+			function prepare_inputs() {
+				
+				document.querySelector('#state').onchange = function() {
+					window.location.hash = this.value
+					return false
+				}
+			}
+			
+			function register(router, path) {
+				
+				router.register(path, {
+					enter: function({ path, then }) {
+						console.log(`enter ${path}`)
+						register(router, next_path(path))
+						then()
+					},
+					exit: function({ path, then }) {
+						console.log(`exit ${path}`)
+						then()
+					}
+				})
+			}
+			
+			function next_path(path) {
+				
+				let split = path.split('/')
+				split.push(parseInt(split[split.length - 1]) + 1)
+				return split.join('/')
+			}
+			
+		</script>
+	</body>
+</html>

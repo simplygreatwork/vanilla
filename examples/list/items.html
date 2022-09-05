@@ -34,7 +34,7 @@
 					select_row(row, bus)
 					component.child('void').redirect('./detail.html', { item, bus }, then)
 				},
-				exit : function({ path, part, index, then }) {
+				exit : function({ then }) {
 					component.child('void').redirect('../shared/views/empty.html', {}, then)
 				}
 			})

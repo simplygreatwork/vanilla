@@ -1,5 +1,5 @@
 
-import { Bus, install as install_bus } from './bus.js'
+import { Bus, install as install_bus } from '../../bus/source/bus.js'
 import { clone } from './utility.js'
 
 export class Store {

@@ -11,12 +11,12 @@
 			
 			import { Store } from '../source/store.js'
 			import history from '../source/history.js'
-			import logging from '../source/logging.js'
 			import proxy from '../source/proxy.js'
+			import { install as install_printer } from '../../printer/source/printer.js'
+			install_printer()
 			
 			let store = new Store()
 			.use(history)
-			.use(logging)
 			.use(proxy)
 			
 			store.set(['a'], {})

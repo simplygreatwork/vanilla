@@ -10,11 +10,10 @@
 		<script type="module">
 			
 			import { Store } from '../source/store.js'
-			import logging from '../source/logging.js'
+			import { install as install_printer } from '../../printer/source/printer.js'
+			install_printer()
 			
 			let store = new Store()
-			.use(logging)
-			
 			store.set('a', {})
 			store.set('a.b', {})
 			store.set('a.b.c', {})

@@ -11,12 +11,12 @@
 			
 			import { Store } from '../source/store.js'
 			import history from '../source/history.js'
-			import logging from '../source/logging.js'
 			import proxy from '../source/proxy.js'
+			import { install as install_printer } from '../../printer/source/printer.js'
+			install_printer()
 			
 			let store = new Store()
 			.use(history)
-			.use(logging)
 			.use(proxy)
 			
 			// store.bus.on('change', function(path, value, value_old) {
@@ -81,7 +81,7 @@
 			// store.redo()
 			console.log('store.root: ' + JSON.stringify(store.root))
 			// console.log('store.changes: ' + JSON.stringify(store.changes, null, 2))
-
+			
 		</script>
 	</body>
 </html>
