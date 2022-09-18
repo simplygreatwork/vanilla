@@ -8,15 +8,15 @@
 		
 		import { Component } from '../../source/component.js'
 		
-		Component.ready(function({ component }) {
+		Component.ready(function({ component, $ }) {
 			console.log('child.html ready')
 			let child = component.child('grandchild')
 			child = component.child(0)
 			child.on('initialized' , function() {
 				system.bus.emit('data', 48)
 			})
-			child.data = { value: 56}
-		}, { spread : true })
+			child.data = { value: 56 }
+		})
 		
 	</script>
 </div>

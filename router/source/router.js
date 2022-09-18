@@ -14,12 +14,12 @@ export class Router {
 		this.bus = new Bus()
 		install_bus(this)
 		this.offs = []
-		this.changing = false			// need a queue
+		this.changing = false					// need a queue
 	}
 	
 	go(path) {
 		
-		if (this.changing === true) return 
+		if (this.changing === true) return
 		let then = this.then = this.now
 		let now = this.now = path.split('/').slice(1)
 		let marker = -1

@@ -24,7 +24,7 @@ export class Store {
 		
 		this.bus.on('did-set-value', function({ path }) {
 			this.bus.emit('change', ...arguments)
-			this.bus.emit(`change:${path.join('/')}`, ...arguments)
+			this.bus.emit(`change:${path.join('.')}`, ...arguments)
 		}.bind(this))
 	}
 	

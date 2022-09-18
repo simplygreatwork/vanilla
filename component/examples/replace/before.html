@@ -1,18 +1,17 @@
 <div>
-	
 	<div>before.html</div>
 	
 	<script type="module">
 		
 		import { Component } from '../../source/component.js'
 		
-		Component.ready(function({ component }) {
+		Component.ready(function({ component, $ }) {
 			console.log('before.html ready')
 			window.setTimeout(function() {
-				// use redirect instead with data passing
+				// instead, use redirect with data passing
 				this.element.setAttribute('data-component', `./after.html`)
 			}.bind(this), 2000)
-		}, { spread : true })
+		})
 		
 	</script>
 </div>

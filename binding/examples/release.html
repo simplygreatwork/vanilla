@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>Binding</title>
+	</head>
+	<body>
+		<form>
+			<input id="a">
+			<input id="b">
+			<input id="bb">
+		</form>
+		<div id="c"></div>
+		
+		<script type="module">
+			
+			import { Bus } from '../../bus/source/bus.js'
+			import { Factory } from '../source/factory.js'
+			import { Store } from '../../state/source/store.js'
+			
+			let bus = new Bus()
+			let factory = new Factory({ bus, scope: document.querySelector('body') })
+			factory.release({ key: 'tasks/a' })
+			factory.release({ key: 'tasks/b' })
+			factory.release()
+			
+		</script>
+	</body>
+</html>

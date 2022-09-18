@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
-		<title>Bus</title>
+		<title>Bus : Override</title>
 	</head>
 	<body>
 		<script type="module">
@@ -16,6 +16,12 @@
 			let off = bus.on('Hello', function(name) {
 				console.log(`Hello ${name}!`)
 				off()
+			})
+			
+			let off_ = bus.unshift('Hello', function(name, interrupt) {
+				console.log(`Hello ${name}! override`)
+				interrupt()
+				off_()
 			})
 			
 			bus.emit('Hello', 'World')

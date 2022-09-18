@@ -17,6 +17,20 @@
 			
 			import observable from '../source/observable.js'
 			
+			const data = observable({})
+			let element = document.querySelector('#main')
+			bind(data, element)
+			revise(data, element)
+			Object.assign(data, {
+				name: 'Mickey Mouse',
+				age: 36
+			})
+			window.setTimeout(function() {
+				data.name = 'Donald Duck'
+				data.age = 47
+				console.log(JSON.stringify(data, null, 2))
+			}, 1000)
+			
 			function bind(observable, element) {
 				
 				observable.on('value', function(key, value, object) {
@@ -33,20 +47,6 @@
 					interrupt()
 				})
 			}
-			
-			const data = observable({})
-			let element = document.querySelector('#main')
-			bind(data, element)
-			revise(data, element)
-			Object.assign(data, {
-				name: 'Mickey Mouse',
-				age: 36
-			})
-			window.setTimeout(function() {
-				data.name = 'Donald Duck'
-				data.age = 47
-				console.log(JSON.stringify(data, null, 2))
-			}, 1000)
 			
 		</script>
 	</body>

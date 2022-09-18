@@ -19,7 +19,7 @@
 		Component.ready(function({ component, $ }) {
 			
 			router.on('change', function(hash) {
-				let array = window.location.hash.split('/')
+				let array = hash.split('/')
 				array.shift()
 				let list = []							// use array.reduce instead?
 				while (array.length > 0) {

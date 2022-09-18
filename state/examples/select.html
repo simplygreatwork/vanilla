@@ -17,7 +17,7 @@
 			store.set('a', {})
 			store.set('a.b', {})
 			store.set('a.b.c', {})
-			let a = store.select(['a'])
+			let a = store.select('a')
 			a.set('value', 'aa')
 			a.set('b.value', 'bb')
 			let b = store.select('a.b')

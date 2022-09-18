@@ -15,25 +15,25 @@
 			install_printer()
 			
 			let store = new Store()
-			store.set(['derived'], {})
-			store.set(['derived', 'value'], {})
-			store.set(['derived', 'value', 'x'], 0)
-			console.log(`store.get(['derived', 'value']: ${JSON.stringify(store.get(['derived', 'value']))}`)
+			store.set('derived', {})
+			store.set('derived.value', {})
+			store.set('derived.value.x', 0)
+			console.log(`store.get('derived.value'): ${JSON.stringify(store.get('derived.value'))}`)
 			let derived = store.derive(['derived', 'value'], function(value) {
 				value = JSON.parse(JSON.stringify(value))
 				value.x = value.x + ' !!!'
 				return value
 			})
-			console.log(`derived.get(): ${JSON.stringify(derived.get([]))}`)
+			console.log(`derived.get(): ${JSON.stringify(derived.get())}`)
 			derived.on('change', function({ value, path }) {
 				console.log(`derived changed: ${JSON.stringify(value)}`)
 			})
-			store.set(['derived', 'value'], { x: 1 })
-			store.set(['derived', 'value'], { x: 2 })
-			store.set(['derived', 'value'], { x: 3 })
-			console.log(`derived.get(): ${JSON.stringify(derived.get([]))}`)
+			store.set('derived.value', { x: 1 })
+			store.set('derived.value', { x: 2 })
+			store.set('derived.value', { x: 3 })
+			console.log(`derived.get(): ${JSON.stringify(derived.get())}`)
 			
-			store.set(['contact'], { first: 'Captain', last: 'Amazing', phone: '0123456789' })
+			store.set('contact', { first: 'Captain', last: 'Amazing', phone: '0123456789' })
 			derived = store.derive(['contact'], function(value) {
 				value = clone(value)
 				value.name = `Mr. ${value.first} ${value.last}`
@@ -46,7 +46,7 @@
 			derived.on('change', function({ value, path }) {
 				console.log(`derived changed: ${JSON.stringify(value)}`)
 			})
-			store.set(['contact'], { first: 'Captain', last: 'America', phone: '5120123456' })
+			store.set('contact', { first: 'Captain', last: 'America', phone: '5120123456' })
 			console.log(`derived.get(): ${JSON.stringify(derived.get([]))}`)
 			
 			// todo: test with two derived from the same store path

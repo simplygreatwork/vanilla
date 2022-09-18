@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>Binding</title>
+	</head>
+	<body>
+		<form>
+			<input id="a">
+			<input id="b">
+		</form>
+		<div id="c"></div>
+		
+		<script type="module">
+			
+			import { Bus } from '../../bus/source/bus.js'
+			import { Factory } from '../source/factory.js'
+			import { format_currency } from '../source/format.js'
+			
+			let bus = new Bus()
+			let factory = new Factory({ bus, scope: document.querySelector('body') })
+			factory.storage()
+			factory.element({ key: 'a', format: format_currency })
+			factory.element({ key: 'a/b' })
+			let value = factory.value({ key: 'a' })
+			if (false) value('Woot')
+			
+		</script>
+	</body>
+</html>

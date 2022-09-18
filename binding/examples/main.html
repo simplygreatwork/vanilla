@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>Binding</title>
+	</head>
+	<body>
+		<form>
+			<input id="a">
+			<input id="b">
+		</form>
+		<div id="c"></div>
+		
+		<script type="module">
+			
+			import { Bus } from '../../bus/source/bus.js'
+			import { Storage } from '../source/storage.js'
+			import { Element } from '../source/element.js'
+			
+			let bus = new Bus()
+			new Storage({ bus })
+			new Element({ bus, key: 'a'})
+			new Element({ bus, key: 'a/b' })
+			
+		</script>
+	</body>
+</html>

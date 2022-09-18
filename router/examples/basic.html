@@ -49,7 +49,7 @@
 			let router = new Router()
 			install_printer('#output')
 			prepare_inputs()
-			register(router, '1')
+			watch(router, '1')
 			
 			function prepare_inputs() {
 				
@@ -59,7 +59,7 @@
 				}
 			}
 			
-			function register(router, path) {
+			function watch(router, path) {
 				
 				router.register(path, {
 					enter: function({ path, then }) {

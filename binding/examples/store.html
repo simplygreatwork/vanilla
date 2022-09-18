@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+		<title>Binding</title>
+	</head>
+	<body>
+		<form>
+			<input id="title">
+			<input id="created_date">
+			<input id="bb">
+		</form>
+		<div id="c"></div>
+		
+		<script type="module">
+			
+			import { Bus } from '../../bus/source/bus.js'
+			import { Factory } from '../source/factory.js'
+			import { format_currency } from '../source/format.js'
+			import { Store } from '../../state/source/store.js'
+			
+			let bus = new Bus()
+			let factory = new Factory({ bus, scope: document.querySelector('body') })
+			let store = new Store()
+			store.set('tasks', {})
+			store.set('tasks.walk_dog', { title: 'Walk Dog', created_date: '01/01/2021', complete: true})
+			let object = store.get('tasks.walk_dog')
+			console.log(`object: ${JSON.stringify(object)}`)
+			factory.store({ store })
+			factory.element({ key: 'tasks/walk_dog/title', format: format_currency })
+			factory.element({ key: 'tasks/walk_dog/created_date' })
+			factory.element({ key: 'tasks/walk_dog/created_date', selector: '#bb' })
+			let value = factory.value({ key: 'tasks/a' })
+			value('Woot')
+			
+		</script>
+	</body>
+</html>

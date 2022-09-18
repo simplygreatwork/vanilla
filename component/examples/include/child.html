@@ -8,10 +8,10 @@
 		
 		import { Component } from '../../source/component.js'
 		
-		Component.ready(function({ component }) {
+		Component.ready(function({ component, $ }) {
 			console.log('child.html ready')
 			console.log('child.html children length: ' + component.children.length)
-		}, { spread : true })
+		})
 		
 	</script>
 </div>

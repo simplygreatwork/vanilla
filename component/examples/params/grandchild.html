@@ -7,13 +7,13 @@
 		
 		import { Component } from '../../source/component.js'
 		
-		Component.ready(function({ component }) {
+		Component.ready(function({ component, $ }) {
 			console.log('grandchild.html ready')
 			console.log('component.data: ' + JSON.stringify(component.data))
 			system.bus.on('data', function(data) {
 				console.log('data: ' + data)
 			})
-		}, { spread : true })
+		})
 		
 	</script>
 </div>
